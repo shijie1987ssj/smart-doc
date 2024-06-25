@@ -222,7 +222,6 @@ public class DocClassUtil {
             case "java.lang.string":
             case "string":
             case "char":
-            case "java.util.date":
             case "date":
             case "java.util.uuid":
             case "uuid":
@@ -273,6 +272,7 @@ public class DocClassUtil {
                 return "double";
             case "java.lang.long":
             case "long":
+            case "java.util.date":
                 return "int64";
             case "java.lang.float":
             case "float":

@@ -405,7 +405,7 @@
                             <w:jc w:val="left"/>
                         </w:pPr>
                         <w:r>
-                            <w:t>${wordXmlEscape(header.desc)}</w:t>
+                            <w:t>${header.required}</w:t>
                         </w:r>
                     </w:p>
                 </w:tc>
@@ -428,7 +428,7 @@
                             <w:jc w:val="left"/>
                         </w:pPr>
                         <w:r>
-                            <w:t>${header.required}</w:t>
+                            <w:t>${wordXmlEscape(header.desc)}</w:t>
                         </w:r>
                     </w:p>
                 </w:tc>

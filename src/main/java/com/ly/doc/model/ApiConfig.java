@@ -184,6 +184,20 @@ public class ApiConfig {
      * project name
      */
     private String projectName;
+
+    public ApiOpenApiCustomParam getOpenApiCustomParam() {
+        return openApiCustomParam;
+    }
+
+    public void setOpenApiCustomParam(ApiOpenApiCustomParam openApiCustomParam) {
+        this.openApiCustomParam = openApiCustomParam;
+    }
+
+    /**
+     * @since ssj_path
+     */
+    private ApiOpenApiCustomParam openApiCustomParam;
+
     /**
      * @since 2.0.7
      * project  cn name

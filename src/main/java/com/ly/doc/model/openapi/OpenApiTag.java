@@ -39,7 +39,7 @@ public class OpenApiTag {
     /**
      * the tag description
      */
-    private String description;
+    private Object description;
 
     public OpenApiTag() {
     }
@@ -61,11 +61,11 @@ public class OpenApiTag {
         this.name = name;
     }
 
-    public String getDescription() {
+    public Object getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(Object description) {
         this.description = description;
     }
 

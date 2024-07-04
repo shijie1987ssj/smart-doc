@@ -32,7 +32,6 @@ import com.power.common.util.FileUtil;
 import com.ly.doc.helper.JavaProjectBuilderHelper;
 import com.ly.doc.model.openapi.OpenApiTag;
 import com.ly.doc.utils.JsonUtil;
-import com.power.common.util.StringUtil;
 import com.thoughtworks.qdox.JavaProjectBuilder;
 import org.apache.commons.lang3.StringUtils;
 
@@ -84,16 +83,36 @@ public class OpenApiBuilder extends AbstractOpenApiBuilder {
         Map<String, Object> json = new LinkedHashMap<>(8);
         json.put("openapi", "3.1.0");
         json.put("info", buildInfo(config));
-        json.put("servers", buildServers(config));
         Set<OpenApiTag> tags = new HashSet<>();
         json.put("tags", tags);
+        json.put("servers", buildServers(config));
         json.put("paths", buildPaths(config, apiSchema, tags));
+        if(config.getOpenApiCustomParam() != null && config.getOpenApiCustomParam().isBuildTag()){
+            customTag(config, tags);
+        } else {
+            tags = null;
+        }
         json.put("components", buildComponentsSchema(apiSchema));
 
         String filePath = config.getOutPath();
         filePath = filePath + DocGlobalConstants.OPEN_API_JSON;
         String data = JsonUtil.toPrettyJson(json);
+//        ObjectMapper yamlMapper = new YAMLMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
+//        String json = yamlMapper.writerWithDefaultPrettyPrinter().writeValueAsString(swagger);
         FileUtil.nioWriteFile(data, filePath);
+    }
+
+    private void customTag(ApiConfig config, Set<OpenApiTag> tags) {
+        if (CollectionUtil.isEmpty(config.getOpenApiCustomParam().getCustomTag())) {
+            return;
+        }
+        for (ApiOpenApiCustomParam.CustomTag customTag : config.getOpenApiCustomParam().getCustomTag()) {
+            OpenApiTag tag = new OpenApiTag();
+            tag.setName(customTag.getName());
+            Map<String, String> descRefMap = buildRefMap(customTag.getDescriptionRefUri());
+            tag.setDescription(descRefMap);
+            tags.add(tag);
+        }
     }
 
     /**
@@ -105,7 +124,17 @@ public class OpenApiBuilder extends AbstractOpenApiBuilder {
         Map<String, Object> infoMap = new HashMap<>(8);
         infoMap.put("title", apiConfig.getProjectName() == null ? "Project Name is Null." : apiConfig.getProjectName());
         infoMap.put("version", "v1.0.0");
+        if (apiConfig.getOpenApiCustomParam() != null && StringUtils.isNotBlank(apiConfig.getOpenApiCustomParam().getInfoDescriptionRefUri())) {
+            Map<String, String> descRefMap = buildRefMap( apiConfig.getOpenApiCustomParam().getInfoDescriptionRefUri());
+            infoMap.put("description", descRefMap);
+        }
         return infoMap;
+    }
+
+    private static Map<String, String> buildRefMap(String ref) {
+        Map<String, String> descRefMap = new HashMap<>();
+        descRefMap.put("$ref", ref);
+        return descRefMap;
     }
 
     /**
@@ -146,7 +175,9 @@ public class OpenApiBuilder extends AbstractOpenApiBuilder {
 //        } else {
 //            request.put("tags", new String[]{tag});
 //        }
-        request.put("tags", apiMethodDoc.getTagRefs().stream().map(TagDoc::getTag).toArray());
+        if(apiConfig.getOpenApiCustomParam() != null && apiConfig.getOpenApiCustomParam().isBuildTag()){
+            request.put("tags", apiMethodDoc.getTagRefs().stream().map(TagDoc::getTag).toArray());
+        }
         request.put("requestBody", buildRequestBody(apiConfig, apiMethodDoc));
         request.put("parameters", buildParameters(apiMethodDoc));
         request.put("responses", buildResponses(apiConfig, apiMethodDoc,apiExceptionStatuses));

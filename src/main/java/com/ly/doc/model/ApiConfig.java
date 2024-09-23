@@ -192,18 +192,18 @@ public class ApiConfig {
 	 */
 	private String projectCName;
 
-    public ApiOpenApiCustomParam getOpenApiCustomParam() {
-        return openApiCustomParam;
-    }
+	public ApiOpenApiCustomParam getOpenApiCustomParam() {
+		return openApiCustomParam;
+	}
 
-    public void setOpenApiCustomParam(ApiOpenApiCustomParam openApiCustomParam) {
-        this.openApiCustomParam = openApiCustomParam;
-    }
+	public void setOpenApiCustomParam(ApiOpenApiCustomParam openApiCustomParam) {
+		this.openApiCustomParam = openApiCustomParam;
+	}
 
-    /**
-     * @since ssj_path
-     */
-    private ApiOpenApiCustomParam openApiCustomParam;
+	/**
+	 * @since ssj_path
+	 */
+	private ApiOpenApiCustomParam openApiCustomParam;
 
 	/**
 	 * serialize request transients;default false

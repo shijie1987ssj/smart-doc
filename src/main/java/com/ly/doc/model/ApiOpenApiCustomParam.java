@@ -23,133 +23,132 @@ package com.ly.doc.model;
 import java.util.List;
 
 /**
- * Description:
- * http request param info model
+ * Description: http request param info model
  *
  * @author yu 2018/06/18.
- * @author chenqi  2021/07/15
+ * @author chenqi 2021/07/15
  */
 public class ApiOpenApiCustomParam {
 
-    private String infoDescriptionRefUri;
+	private String infoDescriptionRefUri;
 
-    private String logo;
+	private String logo;
 
-    private boolean isBuildTag = true;
+	private boolean isBuildTag = true;
 
-    /**
-     * list of Authentication Request headers
-     */
-    private List<ApiAuthenticationParam> authenticationRequestHeaders;
+	/**
+	 * list of Authentication Request headers
+	 */
+	private List<ApiAuthenticationParam> authenticationRequestHeaders;
 
-    /**
-     * 是否输出curl请求示例
-     */
-    private boolean requestXExampleCurl = true;
+	/**
+	 * 是否输出curl请求示例
+	 */
+	private boolean requestXExampleCurl = true;
 
-    private List<CustomTag> startCustomTag;
+	private List<CustomTag> startCustomTag;
 
-    private List<CustomTag> endCustomTag;
+	private List<CustomTag> endCustomTag;
 
-    public boolean isBuildTag() {
-        return isBuildTag;
-    }
+	public boolean isBuildTag() {
+		return isBuildTag;
+	}
 
-    public List<CustomTag> getStartCustomTag() {
-        return startCustomTag;
-    }
+	public List<CustomTag> getStartCustomTag() {
+		return startCustomTag;
+	}
 
-    public void setStartCustomTag(List<CustomTag> startCustomTag) {
-        this.startCustomTag = startCustomTag;
-    }
+	public void setStartCustomTag(List<CustomTag> startCustomTag) {
+		this.startCustomTag = startCustomTag;
+	}
 
-    public void setBuildTag(boolean buildTag) {
-        isBuildTag = buildTag;
-    }
+	public void setBuildTag(boolean buildTag) {
+		isBuildTag = buildTag;
+	}
 
-    public String getInfoDescriptionRefUri() {
-        return infoDescriptionRefUri;
-    }
+	public String getInfoDescriptionRefUri() {
+		return infoDescriptionRefUri;
+	}
 
-    public void setInfoDescriptionRefUri(String infoDescriptionRefUri) {
-        this.infoDescriptionRefUri = infoDescriptionRefUri;
-    }
+	public void setInfoDescriptionRefUri(String infoDescriptionRefUri) {
+		this.infoDescriptionRefUri = infoDescriptionRefUri;
+	}
 
-    public List<CustomTag> getEndCustomTag() {
-        return endCustomTag;
-    }
+	public List<CustomTag> getEndCustomTag() {
+		return endCustomTag;
+	}
 
-    public void setEndCustomTag(List<CustomTag> endCustomTag) {
-        this.endCustomTag = endCustomTag;
-    }
+	public void setEndCustomTag(List<CustomTag> endCustomTag) {
+		this.endCustomTag = endCustomTag;
+	}
 
-    public List<ApiAuthenticationParam> getAuthenticationRequestHeaders() {
-        return authenticationRequestHeaders;
-    }
+	public List<ApiAuthenticationParam> getAuthenticationRequestHeaders() {
+		return authenticationRequestHeaders;
+	}
 
-    public void setAuthenticationRequestHeaders(List<ApiAuthenticationParam> authenticationRequestHeaders) {
-        this.authenticationRequestHeaders = authenticationRequestHeaders;
-    }
+	public void setAuthenticationRequestHeaders(List<ApiAuthenticationParam> authenticationRequestHeaders) {
+		this.authenticationRequestHeaders = authenticationRequestHeaders;
+	}
 
-    public boolean isRequestXExampleCurl() {
-        return requestXExampleCurl;
-    }
+	public boolean isRequestXExampleCurl() {
+		return requestXExampleCurl;
+	}
 
-    public void setRequestXExampleCurl(boolean requestXExampleCurl) {
-        this.requestXExampleCurl = requestXExampleCurl;
-    }
+	public void setRequestXExampleCurl(boolean requestXExampleCurl) {
+		this.requestXExampleCurl = requestXExampleCurl;
+	}
 
-    public String getLogo() {
-        return logo;
-    }
+	public String getLogo() {
+		return logo;
+	}
 
-    public void setLogo(String logo) {
-        this.logo = logo;
-    }
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
 
-    public static ApiOpenApiCustomParam builder() {
-        return new ApiOpenApiCustomParam();
-    }
+	public static ApiOpenApiCustomParam builder() {
+		return new ApiOpenApiCustomParam();
+	}
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("{");
-        sb.append("\"infoDescriptionRefUri\":\"")
-                .append(infoDescriptionRefUri).append('\"');
-        sb.append('}');
-        return sb.toString();
-    }
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder("{");
+		sb.append("\"infoDescriptionRefUri\":\"").append(infoDescriptionRefUri).append('\"');
+		sb.append('}');
+		return sb.toString();
+	}
 
-    public static class CustomTag {
-        private String name;
+	public static class CustomTag {
 
-        private String descriptionRefUri;
+		private String name;
 
-        public String getName() {
-            return name;
-        }
+		private String descriptionRefUri;
 
-        public void setName(String name) {
-            this.name = name;
-        }
+		public String getName() {
+			return name;
+		}
 
-        public String getDescriptionRefUri() {
-            return descriptionRefUri;
-        }
+		public void setName(String name) {
+			this.name = name;
+		}
 
-        public void setDescriptionRefUri(String descriptionRefUri) {
-            this.descriptionRefUri = descriptionRefUri;
-        }
+		public String getDescriptionRefUri() {
+			return descriptionRefUri;
+		}
 
-        @Override
-        public String toString() {
-            final StringBuilder sb = new StringBuilder("{");
-            sb.append("\"tagName\":\"")
-                    .append(name).append('\"');
-            sb.append(",\"tagDescription\":\"")
-                    .append(descriptionRefUri).append('\"');
-            sb.append('}');
-            return sb.toString();
-        }
-    }
+		public void setDescriptionRefUri(String descriptionRefUri) {
+			this.descriptionRefUri = descriptionRefUri;
+		}
+
+		@Override
+		public String toString() {
+			final StringBuilder sb = new StringBuilder("{");
+			sb.append("\"tagName\":\"").append(name).append('\"');
+			sb.append(",\"tagDescription\":\"").append(descriptionRefUri).append('\"');
+			sb.append('}');
+			return sb.toString();
+		}
+
+	}
+
 }

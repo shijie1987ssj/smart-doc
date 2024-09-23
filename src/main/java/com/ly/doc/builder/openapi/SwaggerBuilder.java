@@ -93,7 +93,7 @@ public class SwaggerBuilder extends AbstractOpenApiBuilder {
 		json.put("info", buildInfo(config));
 		json.put("host", config.getServerUrl() == null ? "127.0.0.1" : config.getServerUrl());
 		json.put("basePath", StringUtils.isNotBlank(config.getPathPrefix()) ? config.getPathPrefix() : "/");
-        LinkedHashSet<OpenApiTag> tags = new LinkedHashSet<>();
+		LinkedHashSet<OpenApiTag> tags = new LinkedHashSet<>();
 		json.put("tags", tags);
 		json.put("paths", buildPaths(config, apiSchema, tags));
 		json.put("definitions", buildComponentsSchema(config, apiSchema));

@@ -363,7 +363,7 @@ public class DocClassUtil {
 				return "double";
 			case "java.lang.long":
 			case "long":
-            case "java.util.date":
+			case "java.util.date":
 				return "int64";
 			case "java.lang.float":
 			case "float":

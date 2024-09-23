@@ -228,7 +228,7 @@ public interface IRestDocTemplate extends IBaseDocBuildTemplate {
 			apiDoc.setAlias(name);
 		}
 		String desc = DocUtil.getEscapeAndCleanComment(cls.getComment());
-        apiDoc.setName(desc);
+		apiDoc.setName(desc);
 		apiDoc.setDesc(desc);
 		apiDoc.setList(apiMethodDocs);
 		apiDocList.add(apiDoc);

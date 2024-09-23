@@ -27,97 +27,94 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Objects;
 
 /**
- * Description:
- * http request ApiAuthenticationParam info model
+ * Description: http request ApiAuthenticationParam info model
  *
  * @author yu 2018/06/18.
- * @author chenqi  2021/07/15
+ * @author chenqi 2021/07/15
  */
 public class ApiAuthenticationParam {
 
-    /**
-     * Request param name
-     */
-    private String name;
+	/**
+	 * Request param name
+	 */
+	private String name;
 
-    /**
-     * Request param type
-     */
-    private String type;
+	/**
+	 * Request param type
+	 */
+	private String type;
 
-    /**
-     * Request param description
-     */
-    private String desc;
+	/**
+	 * Request param description
+	 */
+	private String desc;
 
-    public static ApiAuthenticationParam builder() {
-        return new ApiAuthenticationParam();
-    }
+	public static ApiAuthenticationParam builder() {
+		return new ApiAuthenticationParam();
+	}
 
-    public static ApiReqParam convertToApiParam(ApiAuthenticationParam param) {
-        ApiReqParam apiReqParam = new ApiReqParam();
-        apiReqParam.setName(param.getName());
-        apiReqParam.setDesc(param.getDesc());
-        apiReqParam.setRequired(true);
-        apiReqParam.setType(param.getType());
-        apiReqParam.setValue("123");
-        return apiReqParam;
-    }
+	public static ApiReqParam convertToApiParam(ApiAuthenticationParam param) {
+		ApiReqParam apiReqParam = new ApiReqParam();
+		apiReqParam.setName(param.getName());
+		apiReqParam.setDesc(param.getDesc());
+		apiReqParam.setRequired(true);
+		apiReqParam.setType(param.getType());
+		apiReqParam.setValue("123");
+		return apiReqParam;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public ApiAuthenticationParam setName(String name) {
-        this.name = name;
-        return this;
-    }
+	public ApiAuthenticationParam setName(String name) {
+		this.name = name;
+		return this;
+	}
 
-    public String getType() {
-        return type;
-    }
+	public String getType() {
+		return type;
+	}
 
-    public ApiAuthenticationParam setType(String type) {
-        this.type = type;
-        return this;
-    }
+	public ApiAuthenticationParam setType(String type) {
+		this.type = type;
+		return this;
+	}
 
-    public String getDesc() {
-        return desc;
-    }
+	public String getDesc() {
+		return desc;
+	}
 
-    public ApiAuthenticationParam setDesc(String desc) {
-        this.desc = desc;
-        return this;
-    }
+	public ApiAuthenticationParam setDesc(String desc) {
+		this.desc = desc;
+		return this;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        ApiAuthenticationParam that = (ApiAuthenticationParam) o;
-        return Objects.equals(name, that.name);
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		ApiAuthenticationParam that = (ApiAuthenticationParam) o;
+		return Objects.equals(name, that.name);
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hash(name);
+	}
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("{");
-        sb.append("\"name\":\"")
-                .append(name).append('\"');
-        sb.append(",\"type\":\"")
-                .append(type).append('\"');
-        sb.append(",\"desc\":\"")
-                .append(desc).append('\"');
-        sb.append('}');
-        return sb.toString();
-    }
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder("{");
+		sb.append("\"name\":\"").append(name).append('\"');
+		sb.append(",\"type\":\"").append(type).append('\"');
+		sb.append(",\"desc\":\"").append(desc).append('\"');
+		sb.append('}');
+		return sb.toString();
+	}
+
 }

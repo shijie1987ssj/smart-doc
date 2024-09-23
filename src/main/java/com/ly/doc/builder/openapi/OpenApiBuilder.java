@@ -106,7 +106,7 @@ public class OpenApiBuilder extends AbstractOpenApiBuilder {
 		else {
 			tags = null;
 		}
-		json.put("components", this.buildComponentsSchema(apiSchema));
+		json.put("components", this.buildComponentsSchema(config, apiSchema));
 
 		String filePath = config.getOutPath();
 		filePath = filePath + DocGlobalConstants.OPEN_API_JSON;

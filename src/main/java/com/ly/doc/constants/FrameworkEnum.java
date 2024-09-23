@@ -22,74 +22,109 @@ package com.ly.doc.constants;
 
 import com.power.common.util.StringUtil;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 /**
- * Smart-doc Supported Framework
+ * Smart-doc Supported Framework.
  *
  * @author yu 2021/6/27.
  */
 public enum FrameworkEnum {
 
-    /**
-     * Apache Dubbo
-     */
-    DUBBO("dubbo", "com.ly.doc.template.RpcDocBuildTemplate"),
+	/**
+	 * Apache Dubbo
+	 */
+	DUBBO("dubbo", "com.ly.doc.template.RpcDocBuildTemplate"),
 
-    /**
-     * Javadoc
-     */
-    JAVADOC("javadoc", "com.ly.doc.template.JavadocDocBuildTemplate"),
+	/**
+	 * Javadoc
+	 */
+	JAVADOC("javadoc", "com.ly.doc.template.JavadocDocBuildTemplate"),
 
-    /**
-     * Spring Framework
-     */
-    SPRING("spring", "com.ly.doc.template.SpringBootDocBuildTemplate"),
+	/**
+	 * Spring Framework
+	 */
+	SPRING("spring", "com.ly.doc.template.SpringBootDocBuildTemplate"),
 
-    /**
-     * Solon
-     */
-    SOLON("solon", "com.ly.doc.template.SolonDocBuildTemplate"),
+	/**
+	 * Solon
+	 */
+	SOLON("solon", "com.ly.doc.template.SolonDocBuildTemplate"),
 
-    /**
-     * JAX-RS
-     */
-    JAX_RS("JAX-RS", "com.ly.doc.template.JAXRSDocBuildTemplate");
+	/**
+	 * JAX-RS
+	 */
+	JAX_RS("JAX-RS", "com.ly.doc.template.JAXRSDocBuildTemplate"),
 
-    /**
-     * Framework name
-     */
-    private final String framework;
+	/**
+	 * grpc
+	 */
+	GRPC("grpc", "com.ly.doc.template.GRpcDocBuildTemplate"),
 
-    /**
-     * Framework  IDocBuildTemplate implement
-     */
-    private final String className;
+	;
 
+	/**
+	 * Framework name
+	 */
+	private final String framework;
 
-    FrameworkEnum(String framework, String className) {
-        this.framework = framework;
-        this.className = className;
-    }
+	/**
+	 * Framework IDocBuildTemplate implement
+	 */
+	private final String className;
 
-    public static String getClassNameByFramework(String framework) {
-        String className = "";
-        if (StringUtil.isEmpty(framework)) {
-            return className;
-        }
-        for (FrameworkEnum frameworkEnum : FrameworkEnum.values()) {
-            if (frameworkEnum.framework.equalsIgnoreCase(framework)) {
-                className = frameworkEnum.className;
-                break;
-            }
-        }
-        return className;
-    }
+	/**
+	 * Constructor
+	 * @param framework framework name
+	 * @param className class name
+	 */
+	FrameworkEnum(String framework, String className) {
+		this.framework = framework;
+		this.className = className;
+	}
 
+	/**
+	 * Get class name by framework.
+	 * @param framework framework name
+	 * @return class name
+	 */
+	public static String getClassNameByFramework(String framework) {
+		String className = "";
+		if (StringUtil.isEmpty(framework)) {
+			return className;
+		}
+		for (FrameworkEnum frameworkEnum : FrameworkEnum.values()) {
+			if (frameworkEnum.framework.equalsIgnoreCase(framework)) {
+				className = frameworkEnum.className;
+				break;
+			}
+		}
+		return className;
+	}
 
-    public String getFramework() {
-        return framework;
-    }
+	/**
+	 * Get all supported frameworks.
+	 * @return all supported frameworks
+	 */
+	public static String allFramework() {
+		return Arrays.stream(FrameworkEnum.values()).map(FrameworkEnum::getFramework).collect(Collectors.joining(","));
+	}
 
-    public String getClassName() {
-        return className;
-    }
+	/**
+	 * Get framework name.
+	 * @return framework name
+	 */
+	public String getFramework() {
+		return framework;
+	}
+
+	/**
+	 * Get class name.
+	 * @return class name
+	 */
+	public String getClassName() {
+		return className;
+	}
+
 }

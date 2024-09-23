@@ -26,21 +26,34 @@ import com.ly.doc.model.ApiConfig;
 import com.ly.doc.model.javadoc.JavadocApiAllData;
 import com.thoughtworks.qdox.JavaProjectBuilder;
 
+/**
+ * Javadoc Api Data Builder
+ *
+ * @author chenchuxin
+ * @since 3.0.5
+ */
 public class JavadocApiDataBuilder {
 
-    /**
-     * Get list of ApiDoc
-     *
-     * @param config JavadocApiAllData
-     * @return List of ApiDoc
-     */
-    public static JavadocApiAllData getApiData(ApiConfig config) {
-        config.setShowJavaType(true);
-        config.setFramework(FrameworkEnum.JAVADOC.getFramework());
-        JavadocDocBuilderTemplate builderTemplate = new JavadocDocBuilderTemplate();
-        builderTemplate.checkAndInitForGetApiData(config);
-        JavaProjectBuilder javaProjectBuilder = JavaProjectBuilderHelper.create();
-        builderTemplate.getApiData(config, javaProjectBuilder);
-        return builderTemplate.getApiData(config, javaProjectBuilder);
-    }
+	/**
+	 * private constructor
+	 */
+	private JavadocApiDataBuilder() {
+		throw new IllegalStateException("Utility class");
+	}
+
+	/**
+	 * Get list of ApiDoc
+	 * @param config JavadocApiAllData
+	 * @return List of ApiDoc
+	 */
+	public static JavadocApiAllData getApiData(ApiConfig config) {
+		config.setShowJavaType(true);
+		config.setFramework(FrameworkEnum.JAVADOC.getFramework());
+		JavadocDocBuilderTemplate builderTemplate = new JavadocDocBuilderTemplate();
+		builderTemplate.checkAndInitForGetApiData(config);
+		JavaProjectBuilder javaProjectBuilder = JavaProjectBuilderHelper.create();
+		builderTemplate.getApiData(config, javaProjectBuilder);
+		return builderTemplate.getApiData(config, javaProjectBuilder);
+	}
+
 }

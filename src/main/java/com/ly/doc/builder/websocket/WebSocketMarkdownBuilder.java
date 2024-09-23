@@ -20,58 +20,68 @@
  */
 package com.ly.doc.builder.websocket;
 
-import com.ly.doc.builder.DocBuilderTemplate;
-import com.ly.doc.builder.ProjectDocConfigBuilder;
 import com.ly.doc.constants.DocGlobalConstants;
-import com.ly.doc.factory.BuildTemplateFactory;
 import com.ly.doc.helper.JavaProjectBuilderHelper;
 import com.ly.doc.model.ApiConfig;
 import com.ly.doc.model.WebSocketDoc;
-import com.ly.doc.template.IWebSocketDocBuildTemplate;
 import com.power.common.util.DateTimeUtil;
 import com.thoughtworks.qdox.JavaProjectBuilder;
 
 import java.util.List;
 
 /**
- * use to create websocket Markdown doc
+ * use to create websocket Markdown doc.
  *
  * @author linwumingshi
+ * @since 3.0.3
  */
 public class WebSocketMarkdownBuilder {
 
-    /**
-     * @param config ApiConfig
-     */
-    public static void buildApiDoc(ApiConfig config) {
-        JavaProjectBuilder javaProjectBuilder = JavaProjectBuilderHelper.create();
-        buildApiDoc(config, javaProjectBuilder);
-    }
+	/**
+	 * private constructor
+	 */
+	private WebSocketMarkdownBuilder() {
+		throw new IllegalStateException("Utility class");
+	}
 
-    /**
-     * Only for smart-doc maven plugin and gradle plugin.
-     *
-     * @param config             ApiConfig
-     * @param javaProjectBuilder ProjectDocConfigBuilder
-     */
-    public static void buildApiDoc(ApiConfig config, JavaProjectBuilder javaProjectBuilder) {
-        DocBuilderTemplate builderTemplate = new DocBuilderTemplate();
-        builderTemplate.checkAndInit(config, Boolean.TRUE);
-        config.setAdoc(false);
-        config.setParamsDataToTree(false);
-        ProjectDocConfigBuilder configBuilder = new ProjectDocConfigBuilder(config, javaProjectBuilder);
-        IWebSocketDocBuildTemplate<WebSocketDoc> docBuildTemplate = BuildTemplateFactory.getWebSocketDocBuildTemplate(config.getFramework());
-        if (null == docBuildTemplate) {
-            return;
-        }
-        List<WebSocketDoc> webSocketDocList = docBuildTemplate.getWebSocketData(configBuilder);
-        if (null == webSocketDocList || webSocketDocList.isEmpty()) {
-            return;
-        }
+	/**
+	 * build websocket Markdown doc.
+	 * @param config ApiConfig
+	 */
+	public static void buildApiDoc(ApiConfig config) {
+		JavaProjectBuilder javaProjectBuilder = JavaProjectBuilderHelper.create();
+		buildApiDoc(config, javaProjectBuilder);
+	}
 
-        String version = config.isCoverOld() ? "" : "-V" + DateTimeUtil.long2Str(System.currentTimeMillis(), DocGlobalConstants.DATE_FORMAT_YYYY_MM_DD_HH_MM);
-        String docName = builderTemplate.allInOneDocName(config, "WebSocket" + version + DocGlobalConstants.MARKDOWN_EXTENSION, DocGlobalConstants.MARKDOWN_EXTENSION);
-        builderTemplate.buildWebSocket(webSocketDocList, config, javaProjectBuilder,
-                DocGlobalConstants.WEBSOCKET_ALL_IN_ONE_MD_TPL, docName);
-    }
+	/**
+	 * Only for smart-doc maven plugin and gradle plugin.
+	 * @param config ApiConfig
+	 * @param javaProjectBuilder ProjectDocConfigBuilder
+	 */
+	public static void buildApiDoc(ApiConfig config, JavaProjectBuilder javaProjectBuilder) {
+		WebSocketDocBuilderTemplate webSocketDocBuilderTemplate = new WebSocketDocBuilderTemplate();
+		List<WebSocketDoc> webSocketDocList = webSocketDocBuilderTemplate.getWebSocketApiDoc(Boolean.FALSE, config,
+				javaProjectBuilder);
+
+		if (null == webSocketDocList || webSocketDocList.isEmpty()) {
+			return;
+		}
+
+		if (config.isAllInOne()) {
+			String version = config.isCoverOld() ? "" : "-V" + DateTimeUtil.long2Str(System.currentTimeMillis(),
+					DocGlobalConstants.DATE_FORMAT_YYYY_MM_DD_HH_MM);
+			String docName = webSocketDocBuilderTemplate.allInOneDocName(config, "webSocket-all" + version,
+					DocGlobalConstants.MARKDOWN_EXTENSION);
+			webSocketDocBuilderTemplate.buildWebSocketAllInOne(webSocketDocList, config, javaProjectBuilder,
+					DocGlobalConstants.WEBSOCKET_ALL_IN_ONE_MD_TPL, docName);
+		}
+		else {
+			webSocketDocBuilderTemplate.buildWebSocketApiDoc(webSocketDocList, config,
+					DocGlobalConstants.WEBSOCKET_MD_TPL, DocGlobalConstants.MARKDOWN_API_FILE_EXTENSION);
+
+			webSocketDocBuilderTemplate.buildErrorCodeDoc(config, DocGlobalConstants.ERROR_CODE_LIST_MD_TPL,
+					DocGlobalConstants.ERROR_CODE_LIST_MD, javaProjectBuilder);
+		}
+	}
+
 }

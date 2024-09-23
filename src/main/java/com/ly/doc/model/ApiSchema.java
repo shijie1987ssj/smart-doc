@@ -21,34 +21,47 @@
 
 package com.ly.doc.model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Api Schema
+ *
  * @author yu.sun on 2024/6/9
  * @since 3.0.5
  */
-public class ApiSchema<T> {
+public class ApiSchema<T extends IDoc> implements Serializable {
 
-    List<T> apiDatas;
+	private static final long serialVersionUID = -8712793142951321786L;
 
-    /**
-     * http exception response status
-     */
-    private List<ApiExceptionStatus> apiExceptionStatuses;
+	List<T> apiDatas;
 
-    public List<T> getApiDatas() {
-        return apiDatas;
-    }
+	/**
+	 * http exception response status
+	 */
+	private List<ApiExceptionStatus> apiExceptionStatuses;
 
-    public void setApiDatas(List<T> apiDatas) {
-        this.apiDatas = apiDatas;
-    }
+	public List<T> getApiDatas() {
+		if (apiDatas == null) {
+			apiDatas = new ArrayList<>();
+		}
+		return apiDatas;
+	}
 
-    public List<ApiExceptionStatus> getApiExceptionStatuses() {
-        return apiExceptionStatuses;
-    }
+	public void setApiDatas(List<T> apiDatas) {
+		this.apiDatas = apiDatas;
+	}
 
-    public void setApiExceptionStatuses(List<ApiExceptionStatus> apiExceptionStatuses) {
-        this.apiExceptionStatuses = apiExceptionStatuses;
-    }
+	public List<ApiExceptionStatus> getApiExceptionStatuses() {
+		if (apiExceptionStatuses == null) {
+			apiExceptionStatuses = new ArrayList<>();
+		}
+		return apiExceptionStatuses;
+	}
+
+	public void setApiExceptionStatuses(List<ApiExceptionStatus> apiExceptionStatuses) {
+		this.apiExceptionStatuses = apiExceptionStatuses;
+	}
+
 }

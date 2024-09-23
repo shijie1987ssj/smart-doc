@@ -19,7 +19,7 @@ $\color{red}{你给我的star，胜过所有读过的诗—smart-doc}$
 > 无论你是很有经验的大佬、还是刚入行的萌新。遇到使用疑惑时，我们希望你能仔细阅读smart-doc官方码云的wiki文档。我们将smart-doc及其插件的
 > 每一个配置项和可能在日常中遇到的问题都整理到了文档中。仔细阅读文档就是对开源项目最大的支持。
 
-查看[快速开始](https://smart-doc-group.github.io/#/zh-cn/) 了解详情
+查看[快速开始](https://smart-doc-group.github.io/zh/) 了解详情
 
 ## Features
 
@@ -40,6 +40,7 @@ $\color{red}{你给我的star，胜过所有读过的诗—smart-doc}$
 - 支持`Java`类`Javadoc`文档生成。
 - 支持基于`Git`管理项目的变更增量文档生成。
 - `debug`接口调试`html5`页面完全支持文件上传，下载(`@download tag`标记下载方法)测试。
+- 支持`GRPC`
 
 ## Best Practice
 
@@ -60,10 +61,6 @@ $\color{red}{你给我的star，胜过所有读过的诗—smart-doc}$
 ```
 mvn clean install -Dmaven.test.skip=true
 ```
-
-## TODO
-
-- GRPC
 
 ## License
 
@@ -107,9 +104,24 @@ the [LICENSE](https://gitee.com/smart-doc-team/smart-doc/blob/master/LICENSE) fi
 
 ## Contact
 
-愿意参与构建`smart-doc`或者是需要交流问题可以扫描微信二维码发送`smart-doc`备注信息后管理园拉进群，[常见问题答疑](https://smart-doc-group.github.io/#/zh-cn/faq)
+愿意参与构建`smart-doc`或者是需要交流问题可以扫描微信二维码发送`smart-doc`备注信息后管理员拉进群，[常见问题答疑](https://smart-doc-group.github.io/zh/guide/faq/faq)
+<div style="display: flex; flex-wrap: wrap;">
+    <div style="margin-right: 10px;">
+      <figure>
+        <img src="https://gitee.com/smart-doc-team/smart-doc/raw/master/images/wechat.png" title="微信群" width="200px" height="200px"/>
+        <figcaption style="text-align: center;">社区管理员微信</figcaption>
+      </figure>
+    </div>
+    <div style="margin-right: 10px;">
+        <figure>
+        <img src="https://gitee.com/smart-doc-team/smart-doc/raw/master/images/smart-doc-qq2.jpeg" title="QQ群2" width="200px" 
+height="200px"/>
+        <figcaption style="text-align: center;">社区QQ群</figcaption>
+        </figure>
+    </div>
+</div>
 
-<img src="https://gitee.com/smart-doc-team/smart-doc/raw/master/images/wechat.png" title="qq群" width="200px" height="210px"/>
-<img src="https://gitee.com/smart-doc-team/smart-doc/raw/master/images/smart-doc-qq2.jpeg" title="qq群2" width="200px" height="210px"/>
 
-> 1群已满，有问题请加2群。
+关注微信公众号，了解社区动态和更多技术分享
+
+<img src="https://gitee.com/smart-doc-team/smart-doc/raw/master/images/WeChat-Official-Account.png" style="width: 50%; height: 50%" />

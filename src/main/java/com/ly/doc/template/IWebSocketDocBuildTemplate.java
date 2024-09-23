@@ -33,34 +33,34 @@ import java.util.List;
  * websocket doc build template
  *
  * @author linwumingshi
+ * @since 3.0.3
  */
 public interface IWebSocketDocBuildTemplate<T extends WebSocketDoc> extends IDocBuildBaseTemplate {
 
+	/**
+	 * get websocket data by ProjectDocConfigBuilder
+	 * @param projectBuilder ProjectDocConfigBuilder
+	 * @return websocket data
+	 */
+	default List<T> getWebSocketData(ProjectDocConfigBuilder projectBuilder) {
+		// For DocMapping initialization, when building multiple modules together, it is
+		// necessary to initialize and clear the cache
+		DocMapping.init();
+		DocBuildHelper docBuildHelper = DocBuildHelper.create(projectBuilder);
 
-    /**
-     * get websocket data by ProjectDocConfigBuilder
-     *
-     * @param projectBuilder ProjectDocConfigBuilder
-     * @return websocket data
-     */
-    default List<T> getWebSocketData(ProjectDocConfigBuilder projectBuilder) {
-        // For DocMapping initialization, when building multiple modules together, it is necessary to initialize and clear the cache
-        DocMapping.init();
-        DocBuildHelper docBuildHelper = DocBuildHelper.create(projectBuilder);
+		this.preRender(docBuildHelper);
 
-        preRender(docBuildHelper);
+		Collection<JavaClass> candidateClasses = this.getCandidateClasses(projectBuilder, docBuildHelper);
 
-        Collection<JavaClass> candidateClasses = getCandidateClasses(projectBuilder, docBuildHelper);
+		return this.renderWebSocketApi(projectBuilder, candidateClasses);
+	}
 
-        return renderWebSocketApi(projectBuilder, candidateClasses);
-    }
+	/**
+	 * render websocket api
+	 * @param projectBuilder ProjectDocConfigBuilder
+	 * @param candidateClasses candidate classes
+	 * @return websocket data
+	 */
+	List<T> renderWebSocketApi(ProjectDocConfigBuilder projectBuilder, Collection<JavaClass> candidateClasses);
 
-    /**
-     * render websocket api
-     *
-     * @param projectBuilder   ProjectDocConfigBuilder
-     * @param candidateClasses candidate classes
-     * @return websocket data
-     */
-    List<T> renderWebSocketApi(ProjectDocConfigBuilder projectBuilder, Collection<JavaClass> candidateClasses);
 }

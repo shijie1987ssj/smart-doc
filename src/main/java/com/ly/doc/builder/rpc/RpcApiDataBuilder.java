@@ -21,32 +21,42 @@
 package com.ly.doc.builder.rpc;
 
 import com.ly.doc.constants.FrameworkEnum;
+import com.ly.doc.helper.JavaProjectBuilderHelper;
 import com.ly.doc.model.ApiConfig;
 import com.ly.doc.model.rpc.RpcApiAllData;
+import com.ly.doc.model.rpc.RpcApiDoc;
 import com.power.common.util.StringUtil;
-import com.ly.doc.helper.JavaProjectBuilderHelper;
 import com.thoughtworks.qdox.JavaProjectBuilder;
 
 /**
+ * rpc api data builder.
+ *
  * @author yu 2020/5/24.
  */
 public class RpcApiDataBuilder {
 
-    /**
-     * Get list of ApiDoc
-     *
-     * @param config ApiConfig
-     * @return List of ApiDoc
-     */
-    public static RpcApiAllData getApiData(ApiConfig config) {
-        config.setShowJavaType(true);
-        if (StringUtil.isEmpty(config.getFramework())) {
-            config.setFramework(FrameworkEnum.DUBBO.getFramework());
-        }
-        RpcDocBuilderTemplate builderTemplate = new RpcDocBuilderTemplate();
-        builderTemplate.checkAndInitForGetApiData(config);
-        JavaProjectBuilder javaProjectBuilder = JavaProjectBuilderHelper.create();
-        builderTemplate.getApiData(config, javaProjectBuilder);
-        return builderTemplate.getApiData(config, javaProjectBuilder);
-    }
+	/**
+	 * private constructor
+	 */
+	private RpcApiDataBuilder() {
+		throw new IllegalStateException("Utility class");
+	}
+
+	/**
+	 * Get list of ApiDoc
+	 * @param config ApiConfig
+	 * @return List of ApiDoc
+	 */
+	public static RpcApiAllData<RpcApiDoc> getApiData(ApiConfig config) {
+		config.setShowJavaType(true);
+		if (StringUtil.isEmpty(config.getFramework())) {
+			config.setFramework(FrameworkEnum.DUBBO.getFramework());
+		}
+		RpcDocBuilderTemplate builderTemplate = new RpcDocBuilderTemplate();
+		builderTemplate.checkAndInitForGetApiData(config);
+		JavaProjectBuilder javaProjectBuilder = JavaProjectBuilderHelper.create();
+		builderTemplate.getApiData(config, javaProjectBuilder);
+		return builderTemplate.getApiData(config, javaProjectBuilder);
+	}
+
 }

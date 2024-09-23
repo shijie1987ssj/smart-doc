@@ -27,75 +27,187 @@ package com.ly.doc.constants;
  */
 public interface DocAnnotationConstants {
 
+	/**
+	 * jackson JsonIgnore annotation {@code com.fasterxml.jackson.annotation.JsonIgnore}
+	 */
+	String SHORT_JSON_IGNORE = "JsonIgnore";
 
-    String SHORT_JSON_IGNORE = "JsonIgnore";
+	/**
+	 * jackson JsonIgnoreProperties annotation
+	 * {@code com.fasterxml.jackson.annotation.JsonIgnoreProperties}
+	 */
+	String SHORT_JSON_IGNORE_PROPERTIES = "JsonIgnoreProperties";
 
-    /**
-     * jackson JsonIgnoreProperties annotation
-     */
-    String SHORT_JSON_IGNORE_PROPERTIES = "JsonIgnoreProperties";
+	/**
+	 * jackson JsonView annotation {@code com.fasterxml.jackson.annotation.JsonView}
+	 */
+	String SHORT_JSON_VIEW = "JsonView";
 
-    String SHORT_JSON_PROPERTY = "JsonProperty";
+	/**
+	 * jackson JsonProperty annotation
+	 * {@code com.fasterxml.jackson.annotation.JsonProperty}
+	 */
+	String SHORT_JSON_PROPERTY = "JsonProperty";
 
-    /**
-     * com.fasterxml.jackson.databind.annotation.JsonSerialize
-     */
-    String SHORT_JSON_SERIALIZE = "JsonSerialize";
+	/**
+	 * jackson JsonSerialize annotation
+	 * {@code com.fasterxml.jackson.databind.annotation.JsonSerialize}
+	 */
+	String SHORT_JSON_SERIALIZE = "JsonSerialize";
 
-    /**
-     * the value of `@JsonSerialize(using = ToStringSerializer.class)`
-     */
-    String TO_STRING_SERIALIZER_USING = "ToStringSerializer.class";
+	/**
+	 * the value of `@JsonSerialize(using = ToStringSerializer.class)`
+	 */
+	String TO_STRING_SERIALIZER_USING = "ToStringSerializer.class";
 
-    /**
-     * issue #484 gson alias annotation
-     */
-    String GSON_ALIAS_NAME = "SerializedName";
+	/**
+	 * issue #484 gson alias annotation
+	 */
+	String GSON_ALIAS_NAME = "SerializedName";
 
-    String SHORT_JSON_FIELD = "JSONField";
+	/**
+	 * fastjson annotation {@code com.alibaba.fastjson.annotation.JSONField}
+	 */
+	String SHORT_JSON_FIELD = "JSONField";
 
-    String REQUIRED_PROP = "required";
+	/**
+	 * required
+	 */
+	String REQUIRED_PROP = "required";
 
-    String SERIALIZE_PROP = "serialize";
-    String DESERIALIZE_PROP = "deserialize";
+	/**
+	 * com.alibaba.fastjson.annotation.JSONField serialize prop
+	 * {@code com.alibaba.fastjson2.annotation.JSONField#serialize}
+	 */
+	String SERIALIZE_PROP = "serialize";
 
-    String NAME_PROP = "name";
+	/**
+	 * com.alibaba.fastjson.annotation.JSONField deserialize prop
+	 * {@code com.alibaba.fastjson2.annotation.JSONField#deserialize}
+	 */
+	String DESERIALIZE_PROP = "deserialize";
 
-    String VALUE_PROP = "value";
+	/**
+	 * annotation name prop
+	 */
+	String NAME_PROP = "name";
 
-    String PATH_PROP = "path";
+	/**
+	 * annotation value prop
+	 */
+	String VALUE_PROP = "value";
 
-    String GROUP_PROP = "groups";
+	/**
+	 * annotation path prop
+	 */
+	String PATH_PROP = "path";
 
-    String DEFAULT_VALUE_PROP = "defaultValue";
+	/**
+	 * annotation groups prop
+	 */
+	String GROUP_PROP = "groups";
 
-    String DEPRECATED = "Deprecated";
+	/**
+	 * annotation defaultValue prop
+	 */
+	String DEFAULT_VALUE_PROP = "defaultValue";
 
-    String JSON_VALUE = "JsonValue";
+	/**
+	 * Deprecated annotation
+	 */
+	String DEPRECATED = "Deprecated";
 
-    String JSON_CREATOR = "JsonCreator";
+	/**
+	 * Jackson JsonValue annotation {@code com.fasterxml.jackson.annotation.JsonValue}
+	 */
+	String JSON_VALUE = "JsonValue";
 
+	/**
+	 * Jackson JsonCreator annotation {@code com.fasterxml.jackson.annotation.JsonCreator}
+	 */
+	String JSON_CREATOR = "JsonCreator";
 
-    String JSON_PROPERTY = "JsonProperty";
+	/**
+	 * Jackson JsonProperty annotation
+	 * {@code com.fasterxml.jackson.annotation.JsonProperty}
+	 */
+	String JSON_PROPERTY = "JsonProperty";
 
-    String JSON_NAMING = "JsonNaming";
+	/**
+	 * Jackson JsonNaming annotation
+	 * {@code com.fasterxml.jackson.databind.annotation.JsonNaming}
+	 */
+	String JSON_NAMING = "JsonNaming";
 
-    /**
-     * Fastjson JSONType annotation
-     */
-    String SHORT_JSON_TYPE = "JSONType";
+	/**
+	 * Jackson JsonFormat annotation {@code com.fasterxml.jackson.annotation.JsonFormat}
+	 */
+	String JSON_FORMAT = "JsonFormat";
 
-    /**
-     * Fastjson JSONType annotation  ignores prop
-     */
-    String IGNORE_PROP = "ignores";
+	/**
+	 * Jackson JsonFormat annotation pattern prop
+	 * {@code com.fasterxml.jackson.annotation.JsonFormat#pattern}
+	 */
+	String JSON_FORMAT_PATTERN_PROP = "pattern";
 
-    /**
-     * `@javax.websocket.OnOpen` or `@jakarta.websocket.OnOpen` annotation name
-     */
-    String ON_OPEN = "OnOpen";
-    /**
-     * `@javax.websocket.server.PathParam` or `@jakarta.websocket.PathParam` annotation name
-     */
-    String PATH_PARAM = "PathParam";
+	/**
+	 * Jackson JsonFormat annotation shape prop
+	 * {@code com.fasterxml.jackson.annotation.JsonFormat#shape}
+	 */
+	String JSON_FORMAT_SHAPE_PROP = "shape";
+
+	/**
+	 * Jackson JsonFormat annotation timezone prop
+	 * {@code com.fasterxml.jackson.annotation.JsonFormat#timezone}
+	 */
+	String JSON_FORMAT_TIMEZONE_PROP = "timezone";
+
+	/**
+	 * Jackson JsonFormat annotation locale prop
+	 * {@code com.fasterxml.jackson.annotation.JsonFormat#locale}
+	 */
+	String JSON_FORMAT_LOCALE_PROP = "locale";
+
+	/**
+	 * Jackson JsonFormat annotation shape prop number
+	 * {@code com.fasterxml.jackson.annotation.JsonFormat.Shape#NUMBER}
+	 */
+	String JSON_FORMAT_SHAPE_NUMBER = "JsonFormat.Shape.NUMBER";
+
+	/**
+	 * Jackson JsonFormat annotation shape prop string
+	 * {@code com.fasterxml.jackson.annotation.JsonFormat.Shape#STRING}
+	 */
+	String JSON_FORMAT_SHAPE_STRING = "JsonFormat.Shape.STRING";
+
+	/**
+	 * Fastjson JSONType annotation {@code com.alibaba.fastjson2.annotation.JSONType}
+	 */
+	String SHORT_JSON_TYPE = "JSONType";
+
+	/**
+	 * Fastjson JSONType annotation ignores prop
+	 * {@code com.alibaba.fastjson2.annotation.JSONType#ignores}
+	 */
+	String IGNORE_PROP = "ignores";
+
+	/**
+	 * `@javax.websocket.OnOpen` or `@jakarta.websocket.OnOpen` annotation name
+	 * {@code javax.websocket.OnOpen} {@code jakarta.websocket.OnOpen}
+	 */
+	String ON_OPEN = "OnOpen";
+
+	/**
+	 * `@javax.websocket.OnMessage` or `@jakarta.websocket.OnMessage` annotation name
+	 * {@code javax.websocket.OnMessage} {@code jakarta.websocket.OnMessage}
+	 */
+	String ON_MESSAGE = "OnMessage";
+
+	/**
+	 * `@javax.websocket.server.PathParam` or `@jakarta.websocket.PathParam` annotation
+	 * name {@code javax.websocket.server.PathParam}
+	 * {@code jakarta.websocket.server.PathParam}
+	 */
+	String PATH_PARAM = "PathParam";
+
 }

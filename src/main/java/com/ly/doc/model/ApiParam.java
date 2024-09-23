@@ -35,316 +35,320 @@ import static com.ly.doc.constants.DocGlobalConstants.PARAM_PREFIX;
  */
 public class ApiParam {
 
-    /**
-     * param class name
-     */
-    private String className;
-    /**
-     * field id
-     */
-    private int id = 1;
+	/**
+	 * param class name
+	 */
+	private String className;
 
-    /**
-     * field
-     */
-    private String field;
+	/**
+	 * field id
+	 */
+	private int id = 1;
 
-    /**
-     * field type
-     */
-    private String type;
+	/**
+	 * field
+	 */
+	private String field;
 
-    /**
-     * genericFullyQualifiedName of type name
-     */
-    private String fullyTypeName;
+	/**
+	 * field type
+	 */
+	private String type;
 
-    /**
-     * description
-     */
-    private String desc;
+	/**
+	 * The format of the parameter.
+	 */
+	private String format;
 
-    /**
-     * require flag
-     */
-    private boolean required;
+	/**
+	 * genericFullyQualifiedName of type name
+	 */
+	private String fullyTypeName;
 
-    /**
-     * version
-     */
-    private String version;
+	/**
+	 * description
+	 */
+	private String desc;
 
-    /**
-     * field pid
-     */
-    private int pid;
+	/**
+	 * require flag
+	 */
+	private boolean required;
 
-    /**
-     * PathVariableParams flag
-     */
-    private boolean pathParam;
+	/**
+	 * version
+	 */
+	private String version;
 
-    /**
-     * query params flag
-     */
-    private boolean queryParam;
+	/**
+	 * field pid
+	 */
+	private int pid;
 
-    /**
-     * param mock value
-     */
-    private String value;
+	/**
+	 * PathVariableParams flag
+	 */
+	private boolean pathParam;
 
-    /**
-     * children params
-     */
-    private List<ApiParam> children;
+	/**
+	 * query params flag
+	 */
+	private boolean queryParam;
 
-    /**
-     * openapi items
-     */
-    private boolean hasItems;
+	/**
+	 * param mock value
+	 */
+	private String value;
 
-    /**
-     * enum values
-     */
-    private List<String> enumValues;
-    /**
-     * enum
-     */
-    private EnumInfo enumInfo;
-    /**
-     * Valid @Max
-     */
-    private String maxLength;
+	/**
+	 * children params
+	 */
+	private List<ApiParam> children;
 
-    /**
-     * is config.json config param
-     * default false
-     */
-    private boolean configParam;
-    /**
-     * Self  Reference loop
-     */
-    private boolean selfReferenceLoop;
-    private Map<String, Object> extensions;
+	/**
+	 * openapi items
+	 */
+	private boolean hasItems;
 
-    public static ApiParam of() {
-        return new ApiParam();
-    }
+	/**
+	 * enum values
+	 */
+	private List<String> enumValues;
 
-    public EnumInfo getEnumInfo() {
-        return enumInfo;
-    }
+	/**
+	 * enum
+	 */
+	private EnumInfo enumInfo;
 
-    public ApiParam setEnumInfo(EnumInfo enumInfo) {
-        this.enumInfo = enumInfo;
-        return this;
-    }
+	/**
+	 * Valid @Max
+	 */
+	private String maxLength;
 
-    public String getField() {
-        return field;
-    }
+	/**
+	 * is config.json config param default false
+	 */
+	private boolean configParam;
 
-    public ApiParam setField(String field) {
-        this.field = field;
-        return this;
-    }
+	/**
+	 * Self Reference loop
+	 */
+	private boolean selfReferenceLoop;
 
-    public String getSourceField() {
-        if (StringUtils.isEmpty(field)) {
-            return StringUtils.EMPTY;
-        }
-        return field.replaceAll(PARAM_PREFIX, "").replaceAll("&nbsp;", "");
-    }
+	private Map<String, Object> extensions;
 
-    public String getType() {
-        return type;
-    }
+	public static ApiParam of() {
+		return new ApiParam();
+	}
 
-    public ApiParam setType(String type) {
-        this.type = type;
-        return this;
-    }
+	public EnumInfo getEnumInfo() {
+		return enumInfo;
+	}
 
-    public String getDesc() {
-        return desc;
-    }
+	public ApiParam setEnumInfo(EnumInfo enumInfo) {
+		this.enumInfo = enumInfo;
+		return this;
+	}
 
-    public ApiParam setDesc(String desc) {
-        this.desc = desc;
-        return this;
-    }
+	public String getField() {
+		return field;
+	}
 
-    public boolean isRequired() {
-        return required;
-    }
+	public ApiParam setField(String field) {
+		this.field = field;
+		return this;
+	}
 
-    public ApiParam setRequired(boolean required) {
-        this.required = required;
-        return this;
-    }
+	public String getSourceField() {
+		if (StringUtils.isEmpty(field)) {
+			return StringUtils.EMPTY;
+		}
+		return field.replaceAll(PARAM_PREFIX, "").replaceAll("&nbsp;", "");
+	}
 
-    public String getVersion() {
-        return version;
-    }
+	public String getType() {
+		return type;
+	}
 
-    public ApiParam setVersion(String version) {
-        this.version = version;
-        return this;
-    }
+	public ApiParam setType(String type) {
+		this.type = type;
+		return this;
+	}
 
-    public int getId() {
-        return id;
-    }
+	public String getDesc() {
+		return desc;
+	}
 
-    public ApiParam setId(int id) {
-        this.id = id;
-        return this;
-    }
+	public ApiParam setDesc(String desc) {
+		this.desc = desc;
+		return this;
+	}
 
-    public int getPid() {
-        return pid;
-    }
+	public boolean isRequired() {
+		return required;
+	}
 
-    public ApiParam setPid(int pid) {
-        this.pid = pid;
-        return this;
-    }
+	public ApiParam setRequired(boolean required) {
+		this.required = required;
+		return this;
+	}
 
-    public List<ApiParam> getChildren() {
-        return children;
-    }
+	public String getVersion() {
+		return version;
+	}
 
-    public ApiParam setChildren(List<ApiParam> children) {
-        this.children = children;
-        return this;
-    }
+	public ApiParam setVersion(String version) {
+		this.version = version;
+		return this;
+	}
 
-    public boolean isPathParam() {
-        return pathParam;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public ApiParam setPathParam(boolean pathParam) {
-        this.pathParam = pathParam;
-        return this;
-    }
+	public ApiParam setId(int id) {
+		this.id = id;
+		return this;
+	}
 
-    public boolean isQueryParam() {
-        return queryParam;
-    }
+	public int getPid() {
+		return pid;
+	}
 
-    public ApiParam setQueryParam(boolean queryParam) {
-        this.queryParam = queryParam;
-        return this;
-    }
+	public ApiParam setPid(int pid) {
+		this.pid = pid;
+		return this;
+	}
 
-    public String getValue() {
-        return value;
-    }
+	public List<ApiParam> getChildren() {
+		return children;
+	}
 
-    public ApiParam setValue(String value) {
-        this.value = value;
-        return this;
-    }
+	public ApiParam setChildren(List<ApiParam> children) {
+		this.children = children;
+		return this;
+	}
 
-    public boolean isHasItems() {
-        return hasItems;
-    }
+	public boolean isPathParam() {
+		return pathParam;
+	}
 
-    public ApiParam setHasItems(boolean hasItems) {
-        this.hasItems = hasItems;
-        return this;
-    }
+	public ApiParam setPathParam(boolean pathParam) {
+		this.pathParam = pathParam;
+		return this;
+	}
 
-    public List<String> getEnumValues() {
-        return enumValues;
-    }
+	public boolean isQueryParam() {
+		return queryParam;
+	}
 
-    public ApiParam setEnumValues(List<String> enumValues) {
-        this.enumValues = enumValues;
-        return this;
-    }
+	public ApiParam setQueryParam(boolean queryParam) {
+		this.queryParam = queryParam;
+		return this;
+	}
 
-    public String getMaxLength() {
-        return maxLength;
-    }
+	public String getValue() {
+		return value;
+	}
 
-    public ApiParam setMaxLength(String maxLength) {
-        this.maxLength = maxLength;
-        return this;
-    }
+	public ApiParam setValue(String value) {
+		this.value = value;
+		return this;
+	}
 
-    public boolean isConfigParam() {
-        return configParam;
-    }
+	public boolean isHasItems() {
+		return hasItems;
+	}
 
-    public ApiParam setConfigParam(boolean configParam) {
-        this.configParam = configParam;
-        return this;
-    }
+	public ApiParam setHasItems(boolean hasItems) {
+		this.hasItems = hasItems;
+		return this;
+	}
 
-    public String getClassName() {
-        return className;
-    }
+	public List<String> getEnumValues() {
+		return enumValues;
+	}
 
-    public ApiParam setClassName(String className) {
-        this.className = className;
-        return this;
-    }
+	public ApiParam setEnumValues(List<String> enumValues) {
+		this.enumValues = enumValues;
+		return this;
+	}
 
-    public boolean isSelfReferenceLoop() {
-        return selfReferenceLoop;
-    }
+	public String getMaxLength() {
+		return maxLength;
+	}
 
-    public ApiParam setSelfReferenceLoop(boolean selfReferenceLoop) {
-        this.selfReferenceLoop = selfReferenceLoop;
-        return this;
-    }
+	public ApiParam setMaxLength(String maxLength) {
+		this.maxLength = maxLength;
+		return this;
+	}
 
-    public String getFullyTypeName() {
-        if (Objects.isNull(fullyTypeName)) {
-            return type;
-        }
-        return fullyTypeName;
-    }
+	public boolean isConfigParam() {
+		return configParam;
+	}
 
-    public ApiParam setFullyTypeName(String fullyTypeName) {
-        this.fullyTypeName = fullyTypeName;
-        return this;
-    }
+	public ApiParam setConfigParam(boolean configParam) {
+		this.configParam = configParam;
+		return this;
+	}
 
-    public Map<String, Object> getExtensions() {
-        return extensions;
-    }
+	public String getClassName() {
+		return className;
+	}
 
-    public ApiParam setExtensions(Map<String, Object> extensions) {
-        this.extensions = extensions;
-        return this;
-    }
+	public ApiParam setClassName(String className) {
+		this.className = className;
+		return this;
+	}
 
-    @Override
-    public String toString() {
-        return "ApiParam{" +
-                "className='" + className + '\'' +
-                ", id=" + id +
-                ", field='" + field + '\'' +
-                ", type='" + type + '\'' +
-                ", fullyTypeName='" + fullyTypeName + '\'' +
-                ", desc='" + desc + '\'' +
-                ", required=" + required +
-                ", version='" + version + '\'' +
-                ", pid=" + pid +
-                ", pathParam=" + pathParam +
-                ", queryParam=" + queryParam +
-                ", value='" + value + '\'' +
-                ", children=" + children +
-                ", hasItems=" + hasItems +
-                ", enumValues=" + enumValues +
-                ", enumInfo=" + enumInfo +
-                ", maxLength='" + maxLength + '\'' +
-                ", configParam=" + configParam +
-                ", selfReferenceLoop=" + selfReferenceLoop +
-                ", extensions=" + extensions +
-                '}';
-    }
+	public boolean isSelfReferenceLoop() {
+		return selfReferenceLoop;
+	}
+
+	public ApiParam setSelfReferenceLoop(boolean selfReferenceLoop) {
+		this.selfReferenceLoop = selfReferenceLoop;
+		return this;
+	}
+
+	public String getFullyTypeName() {
+		if (Objects.isNull(fullyTypeName)) {
+			return type;
+		}
+		return fullyTypeName;
+	}
+
+	public ApiParam setFullyTypeName(String fullyTypeName) {
+		this.fullyTypeName = fullyTypeName;
+		return this;
+	}
+
+	public Map<String, Object> getExtensions() {
+		return extensions;
+	}
+
+	public ApiParam setExtensions(Map<String, Object> extensions) {
+		this.extensions = extensions;
+		return this;
+	}
+
+	public String getFormat() {
+		return format;
+	}
+
+	public ApiParam setFormat(String format) {
+		this.format = format;
+		return this;
+	}
+
+	@Override
+	public String toString() {
+		return "ApiParam{" + "className='" + className + '\'' + ", id=" + id + ", field='" + field + '\'' + ", type='"
+				+ type + '\'' + ", format='" + format + '\'' + ", fullyTypeName='" + fullyTypeName + '\'' + ", desc='"
+				+ desc + '\'' + ", required=" + required + ", version='" + version + '\'' + ", pid=" + pid
+				+ ", pathParam=" + pathParam + ", queryParam=" + queryParam + ", value='" + value + '\'' + ", children="
+				+ children + ", hasItems=" + hasItems + ", enumValues=" + enumValues + ", enumInfo=" + enumInfo
+				+ ", maxLength='" + maxLength + '\'' + ", configParam=" + configParam + ", selfReferenceLoop="
+				+ selfReferenceLoop + ", extensions=" + extensions + '}';
+	}
+
 }

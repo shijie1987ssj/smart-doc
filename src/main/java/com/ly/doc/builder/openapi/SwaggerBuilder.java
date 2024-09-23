@@ -26,7 +26,6 @@ import com.ly.doc.constants.MediaType;
 import com.ly.doc.constants.ParamTypeConstants;
 import com.ly.doc.model.*;
 import com.ly.doc.utils.DocUtil;
-import com.ly.doc.utils.OpenApiSchemaUtil;
 import com.power.common.util.CollectionUtil;
 import com.power.common.util.FileUtil;
 import com.power.common.util.StringUtil;
@@ -87,10 +86,10 @@ public class SwaggerBuilder extends AbstractOpenApiBuilder {
         json.put("info", buildInfo(config));
         json.put("host", config.getServerUrl() == null ? "127.0.0.1" : config.getServerUrl());
         json.put("basePath", StringUtils.isNotBlank(config.getPathPrefix()) ? config.getPathPrefix() : "/");
-        Set<OpenApiTag> tags = new HashSet<>();
+        LinkedHashSet<OpenApiTag> tags = new LinkedHashSet<>();
         json.put("tags", tags);
         json.put("paths", buildPaths(config, apiSchema, tags));
-        json.put("definitions", buildComponentsSchema(apiSchema));
+        json.put("definitions", buildComponents(config, apiSchema));
 
         String filePath = config.getOutPath();
         filePath = filePath + DocGlobalConstants.OPEN_API_JSON;
@@ -271,7 +270,7 @@ public class SwaggerBuilder extends AbstractOpenApiBuilder {
     }
 
     @Override
-    public Map<String, Object> buildComponentsSchema(ApiSchema<ApiDoc> apiSchema) {
+    public Map<String, Object> buildComponents(ApiConfig config, ApiSchema<ApiDoc> apiSchema) {
         return buildComponentData(apiSchema);
     }
 

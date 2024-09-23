@@ -26,12 +26,17 @@ import com.ly.doc.constants.DocGlobalConstants;
 import com.ly.doc.constants.Methods;
 import com.ly.doc.constants.ParamTypeConstants;
 import com.ly.doc.model.*;
+import com.ly.doc.model.request.CurlRequest;
+import com.ly.doc.utils.CurlUtil;
+import com.ly.doc.utils.DocUtil;
 import com.ly.doc.utils.OpenApiSchemaUtil;
 import com.power.common.util.CollectionUtil;
 import com.power.common.util.FileUtil;
 import com.ly.doc.helper.JavaProjectBuilderHelper;
 import com.ly.doc.model.openapi.OpenApiTag;
 import com.ly.doc.utils.JsonUtil;
+import com.power.common.util.StringUtil;
+import com.power.common.util.UrlUtil;
 import com.thoughtworks.qdox.JavaProjectBuilder;
 import org.apache.commons.lang3.StringUtils;
 
@@ -83,7 +88,7 @@ public class OpenApiBuilder extends AbstractOpenApiBuilder {
         Map<String, Object> json = new LinkedHashMap<>(8);
         json.put("openapi", "3.1.0");
         json.put("info", buildInfo(config));
-        Set<OpenApiTag> tags = new HashSet<>();
+        LinkedHashSet<OpenApiTag> tags = new LinkedHashSet<>();
         json.put("tags", tags);
         json.put("servers", buildServers(config));
         json.put("paths", buildPaths(config, apiSchema, tags));
@@ -92,7 +97,7 @@ public class OpenApiBuilder extends AbstractOpenApiBuilder {
         } else {
             tags = null;
         }
-        json.put("components", buildComponentsSchema(apiSchema));
+        json.put("components", buildComponents(config, apiSchema));
 
         String filePath = config.getOutPath();
         filePath = filePath + DocGlobalConstants.OPEN_API_JSON;
@@ -102,16 +107,31 @@ public class OpenApiBuilder extends AbstractOpenApiBuilder {
         FileUtil.nioWriteFile(data, filePath);
     }
 
-    private void customTag(ApiConfig config, Set<OpenApiTag> tags) {
-        if (CollectionUtil.isEmpty(config.getOpenApiCustomParam().getCustomTag())) {
-            return;
+    private void customTag(ApiConfig config, LinkedHashSet<OpenApiTag> tags) {
+        //开头
+        if (!CollectionUtil.isEmpty(config.getOpenApiCustomParam().getStartCustomTag())) {
+            LinkedHashSet<OpenApiTag> tagsNew = new LinkedHashSet<>();
+            for (ApiOpenApiCustomParam.CustomTag customTag : config.getOpenApiCustomParam().getStartCustomTag()) {
+                OpenApiTag tag = new OpenApiTag();
+                tag.setName(customTag.getName());
+                Map<String, String> descRefMap = buildRefMap(customTag.getDescriptionRefUri());
+                tag.setDescription(descRefMap);
+                tagsNew.add(tag);
+            }
+            tagsNew.addAll(tags);
+            tags.clear();
+            tags.addAll(tagsNew);
         }
-        for (ApiOpenApiCustomParam.CustomTag customTag : config.getOpenApiCustomParam().getCustomTag()) {
-            OpenApiTag tag = new OpenApiTag();
-            tag.setName(customTag.getName());
-            Map<String, String> descRefMap = buildRefMap(customTag.getDescriptionRefUri());
-            tag.setDescription(descRefMap);
-            tags.add(tag);
+
+        //末尾
+        if (!CollectionUtil.isEmpty(config.getOpenApiCustomParam().getEndCustomTag())) {
+            for (ApiOpenApiCustomParam.CustomTag customTag : config.getOpenApiCustomParam().getEndCustomTag()) {
+                OpenApiTag tag = new OpenApiTag();
+                tag.setName(customTag.getName());
+                Map<String, String> descRefMap = buildRefMap(customTag.getDescriptionRefUri());
+                tag.setDescription(descRefMap);
+                tags.add(tag);
+            }
         }
     }
 
@@ -124,9 +144,16 @@ public class OpenApiBuilder extends AbstractOpenApiBuilder {
         Map<String, Object> infoMap = new HashMap<>(8);
         infoMap.put("title", apiConfig.getProjectName() == null ? "Project Name is Null." : apiConfig.getProjectName());
         infoMap.put("version", "v1.0.0");
-        if (apiConfig.getOpenApiCustomParam() != null && StringUtils.isNotBlank(apiConfig.getOpenApiCustomParam().getInfoDescriptionRefUri())) {
-            Map<String, String> descRefMap = buildRefMap( apiConfig.getOpenApiCustomParam().getInfoDescriptionRefUri());
-            infoMap.put("description", descRefMap);
+        if (apiConfig.getOpenApiCustomParam() != null) {
+            if(StringUtils.isNotBlank(apiConfig.getOpenApiCustomParam().getInfoDescriptionRefUri())) {
+                Map<String, String> descRefMap = buildRefMap(apiConfig.getOpenApiCustomParam().getInfoDescriptionRefUri());
+                infoMap.put("description", descRefMap);
+            }
+            if(StringUtils.isNotBlank(apiConfig.getOpenApiCustomParam().getLogo())) {
+                Map<String, String> logoMap = new HashMap<>();
+                logoMap.put("url", apiConfig.getOpenApiCustomParam().getLogo());
+                infoMap.put("x-logo", logoMap);
+            }
         }
         return infoMap;
     }
@@ -175,17 +202,25 @@ public class OpenApiBuilder extends AbstractOpenApiBuilder {
 //        } else {
 //            request.put("tags", new String[]{tag});
 //        }
-        if(apiConfig.getOpenApiCustomParam() != null && apiConfig.getOpenApiCustomParam().isBuildTag()){
+        if (apiConfig.getOpenApiCustomParam() != null && apiConfig.getOpenApiCustomParam().isBuildTag()) {
             request.put("tags", apiMethodDoc.getTagRefs().stream().map(TagDoc::getTag).toArray());
         }
         request.put("requestBody", buildRequestBody(apiConfig, apiMethodDoc));
         request.put("parameters", buildParameters(apiMethodDoc));
-        request.put("responses", buildResponses(apiConfig, apiMethodDoc,apiExceptionStatuses));
+        request.put("responses", buildResponses(apiConfig, apiMethodDoc, apiExceptionStatuses));
         request.put("deprecated", apiMethodDoc.isDeprecated());
         List<String> paths = OpenApiSchemaUtil.getPatternResult("[A-Za-z0-9_{}]*", apiMethodDoc.getPath());
         paths.add(apiMethodDoc.getType());
         String operationId = paths.stream().filter(StringUtils::isNotEmpty).collect(Collectors.joining("-"));
         request.put("operationId", operationId);
+
+        List<Map<String, Object>> security = buildPathSecurity(apiConfig);
+        if (security != null && !security.isEmpty()) {
+            request.put("security", security);
+        }
+        if(apiConfig.getOpenApiCustomParam().isRequestXExampleCurl()){
+            request.put("x-codeSamples", buildXExampleCurl(apiConfig, apiMethodDoc));
+        }
         //add extension attribution
         if (apiMethodDoc.getExtensions() != null) {
             apiMethodDoc.getExtensions().entrySet().forEach(e -> request.put("x-" + e.getKey(), e.getValue()));
@@ -311,9 +346,80 @@ public class OpenApiBuilder extends AbstractOpenApiBuilder {
     }
 
     @Override
-    public Map<String, Object> buildComponentsSchema(ApiSchema<ApiDoc> apiSchema) {
-        Map<String, Object> schemas = new HashMap<>(4);
-        schemas.put("schemas", buildComponentData(apiSchema));
-        return schemas;
+    public Map<String, Object> buildComponents(ApiConfig config, ApiSchema<ApiDoc> apiSchema) {
+        Map<String, Object> components = new HashMap<>(4);
+        //secret
+        LinkedHashMap<String, Object> securitySchemes = buildComponentsSecuritySchemes(config);
+        if (securitySchemes != null && !securitySchemes.isEmpty()) {
+            components.put("securitySchemes", securitySchemes);
+        }
+        //schemas
+        components.put("schemas", buildComponentData(apiSchema));
+        return components;
+    }
+
+    private LinkedHashMap<String, Object> buildComponentsSecuritySchemes(ApiConfig config) {
+        LinkedHashMap<String, Object> parametersList = null;
+        if (!CollectionUtil.isEmpty(config.getOpenApiCustomParam().getAuthenticationRequestHeaders())) {
+            parametersList = new LinkedHashMap<>();
+            for (ApiAuthenticationParam header : config.getOpenApiCustomParam().getAuthenticationRequestHeaders()) {
+                Map<String, Object> apiKeyInfo = new HashMap<>(4);
+                apiKeyInfo.put("description", header.getDesc());
+                apiKeyInfo.put("type", header.getType());
+                apiKeyInfo.put("in", "header");
+                apiKeyInfo.put("name", header.getName());
+                parametersList.put(header.getName(), apiKeyInfo);
+            }
+        }
+        return parametersList;
+    }
+
+    public List<Map<String, Object>> buildPathSecurity(ApiConfig apiConfig) {
+        if(apiConfig.getOpenApiCustomParam().getAuthenticationRequestHeaders() == null || apiConfig.getOpenApiCustomParam().getAuthenticationRequestHeaders().isEmpty()){
+            return null;
+        }
+        List<Map<String, Object>> response = new ArrayList<>();
+        Map<String, Object> headerMap = apiConfig.getOpenApiCustomParam().getAuthenticationRequestHeaders().stream()
+                .map(ApiAuthenticationParam::getName).collect(Collectors.toMap(name -> name, name -> new ArrayList<>()));
+        response.add(headerMap);
+        return response;
+    }
+
+    public List<Map<String, Object>> buildXExampleCurl(ApiConfig apiConfig, ApiMethodDoc apiMethodDoc) {
+        List<Map<String, Object>> curlList = new ArrayList<>();
+        Map<String, Object> curlMap = new HashMap<>(8);
+        curlList.add(curlMap);
+        curlMap.put("lang", "curl");
+
+        String methodType = apiMethodDoc.getType();
+        List<ApiReqParam> reqHeaderList = apiMethodDoc.getRequestHeaders();
+        if(reqHeaderList == null){
+            reqHeaderList = new ArrayList<>();
+        }
+        if(!CollectionUtil.isEmpty(apiConfig.getOpenApiCustomParam().getAuthenticationRequestHeaders())) {
+            List<ApiReqParam> reqAuthHeaderList = apiConfig.getOpenApiCustomParam().getAuthenticationRequestHeaders().stream()
+                    .map(ApiAuthenticationParam::convertToApiParam).collect(Collectors.toList());
+            reqHeaderList.addAll(reqAuthHeaderList);
+        }
+        Map<String, String> pathParamsMap = new LinkedHashMap<>();
+        Map<String, String> queryParamsMap = new LinkedHashMap<>();
+        apiMethodDoc.getPathParams().stream().filter(Objects::nonNull).filter(p -> StringUtil.isNotEmpty(p.getValue()) || p.isConfigParam())
+                .forEach(param -> pathParamsMap.put(param.getSourceField(), param.getValue()));
+        apiMethodDoc.getQueryParams().stream().filter(Objects::nonNull).filter(p -> StringUtil.isNotEmpty(p.getValue()) || p.isConfigParam())
+                .forEach(param -> queryParamsMap.put(param.getSourceField(), param.getValue()));
+        String path = apiMethodDoc.getPath().split(";")[0];
+        path = DocUtil.formatAndRemove(path, pathParamsMap);
+        String url = UrlUtil.urlJoin(path, queryParamsMap);
+        url = StringUtil.removeQuotes(url);
+        url = apiMethodDoc.getServerUrl() + "/" + url;
+        url = UrlUtil.simplifyUrl(url);
+        CurlRequest curlRequest = CurlRequest.builder()
+                .setContentType(apiMethodDoc.getContentType())
+                .setType(methodType)
+                .setReqHeaders(reqHeaderList)
+                .setUrl(url);
+        String format = CurlUtil.toCurl(curlRequest);
+        curlMap.put("source", format);
+        return curlList;
     }
 }

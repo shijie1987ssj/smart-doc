@@ -1104,4 +1104,6 @@ public class ApiConfig {
     public void setAddDefaultHttpStatuses(boolean addDefaultHttpStatuses) {
         this.addDefaultHttpStatuses = addDefaultHttpStatuses;
     }
+
+
 }

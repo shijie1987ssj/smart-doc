@@ -33,12 +33,34 @@ public class ApiOpenApiCustomParam {
 
     private String infoDescriptionRefUri;
 
+    private String logo;
+
     private boolean isBuildTag = true;
 
-    private List<CustomTag> customTag;
+    /**
+     * list of Authentication Request headers
+     */
+    private List<ApiAuthenticationParam> authenticationRequestHeaders;
+
+    /**
+     * 是否输出curl请求示例
+     */
+    private boolean requestXExampleCurl = true;
+
+    private List<CustomTag> startCustomTag;
+
+    private List<CustomTag> endCustomTag;
 
     public boolean isBuildTag() {
         return isBuildTag;
+    }
+
+    public List<CustomTag> getStartCustomTag() {
+        return startCustomTag;
+    }
+
+    public void setStartCustomTag(List<CustomTag> startCustomTag) {
+        this.startCustomTag = startCustomTag;
     }
 
     public void setBuildTag(boolean buildTag) {
@@ -53,12 +75,36 @@ public class ApiOpenApiCustomParam {
         this.infoDescriptionRefUri = infoDescriptionRefUri;
     }
 
-    public List<CustomTag> getCustomTag() {
-        return customTag;
+    public List<CustomTag> getEndCustomTag() {
+        return endCustomTag;
     }
 
-    public void setCustomTag(List<CustomTag> customTag) {
-        this.customTag = customTag;
+    public void setEndCustomTag(List<CustomTag> endCustomTag) {
+        this.endCustomTag = endCustomTag;
+    }
+
+    public List<ApiAuthenticationParam> getAuthenticationRequestHeaders() {
+        return authenticationRequestHeaders;
+    }
+
+    public void setAuthenticationRequestHeaders(List<ApiAuthenticationParam> authenticationRequestHeaders) {
+        this.authenticationRequestHeaders = authenticationRequestHeaders;
+    }
+
+    public boolean isRequestXExampleCurl() {
+        return requestXExampleCurl;
+    }
+
+    public void setRequestXExampleCurl(boolean requestXExampleCurl) {
+        this.requestXExampleCurl = requestXExampleCurl;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 
     public static ApiOpenApiCustomParam builder() {

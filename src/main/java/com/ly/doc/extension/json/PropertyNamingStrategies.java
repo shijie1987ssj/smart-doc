@@ -220,7 +220,7 @@ public abstract class PropertyNamingStrategies
 
     /**
      * at translates an input to the equivalent upper case snake
-     * case. The class extends {@link PropertyNamingStrategies.SnakeCaseStrategy} to retain the
+     * case. The class extends {@link SnakeCaseStrategy} to retain the
      * snake case conversion functionality offered by the strategy.
      *
      * @since 2.13
@@ -303,7 +303,7 @@ public abstract class PropertyNamingStrategies
     }
 
     /**
-     * Naming strategy similar to {@link PropertyNamingStrategies.SnakeCaseStrategy},
+     * Naming strategy similar to {@link SnakeCaseStrategy},
      * but instead of underscores
      * as separators, uses hyphens. Naming convention traditionally used for languages
      * like Lisp.
@@ -317,7 +317,7 @@ public abstract class PropertyNamingStrategies
     }
 
     /**
-     * Naming strategy similar to {@link PropertyNamingStrategies.KebabCaseStrategy},
+     * Naming strategy similar to {@link KebabCaseStrategy},
      * but instead of hyphens
      * as separators, uses dots. Naming convention widely used as configuration properties name.
      */

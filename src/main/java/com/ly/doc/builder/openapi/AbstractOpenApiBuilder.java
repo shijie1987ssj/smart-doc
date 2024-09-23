@@ -101,12 +101,13 @@ public abstract class AbstractOpenApiBuilder {
 
 
     /**
-     * component schema
+     * component schema and securitySchemes
      *
+     * @param config    Configuration of smart-doc
      * @param apiSchema API schema
      * @return component schema Map
      */
-    abstract public Map<String, Object> buildComponentsSchema(ApiSchema<ApiDoc> apiSchema);
+    abstract public Map<String, Object> buildComponents(ApiConfig config, ApiSchema<ApiDoc> apiSchema);
 
     protected static final Map<String, String> STRING_COMPONENT = new HashMap<>();
 
@@ -123,7 +124,7 @@ public abstract class AbstractOpenApiBuilder {
      * @param tags      tags
      * @return Map of paths
      */
-    public Map<String, Object> buildPaths(ApiConfig apiConfig, ApiSchema<ApiDoc> apiSchema, Set<OpenApiTag> tags) {
+    public Map<String, Object> buildPaths(ApiConfig apiConfig, ApiSchema<ApiDoc> apiSchema, LinkedHashSet<OpenApiTag> tags) {
         Map<String, Object> pathMap = new LinkedHashMap<>(500);
 
         List<ApiDoc> apiDocs = apiSchema.getApiDatas();

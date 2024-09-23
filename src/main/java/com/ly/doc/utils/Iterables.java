@@ -21,23 +21,38 @@
  * under the License.
  */
 
-/**
- * @author daiww 2020/08/26.
- */
 package com.ly.doc.utils;
 
 import java.util.function.BiConsumer;
 
+/**
+ * Iterables
+ *
+ * @author daiww
+ */
 public class Iterables {
 
-    public static <E> void forEach(
-        Iterable<? extends E> elements, BiConsumer<Integer, ? super E> action) {
-        if (elements == null || action == null) {
-            return;
-        }
-        int index = 0;
-        for (E element : elements) {
-            action.accept(index++, element);
-        }
-    }
+	/**
+	 * private constructor
+	 */
+	private Iterables() {
+		throw new IllegalStateException("Utility class");
+	}
+
+	/**
+	 * forEach
+	 * @param elements elements
+	 * @param action action
+	 * @param <E> E
+	 */
+	public static <E> void forEach(Iterable<? extends E> elements, BiConsumer<Integer, ? super E> action) {
+		if (elements == null || action == null) {
+			return;
+		}
+		int index = 0;
+		for (E element : elements) {
+			action.accept(index++, element);
+		}
+	}
+
 }

@@ -20,79 +20,115 @@
  */
 package com.ly.doc.model;
 
+import com.ly.doc.constants.FormDataContentTypeEnum;
+
 /**
- * @author xingzi  2019/12/21  20:20
+ * form data class
+ *
+ * @author xingzi 2019/12/21 20:20
  */
 public class FormData {
 
-    private String key;
-    private String type;
-    private String description;
-    private Object src;
-    private String value;
-    /**
-     * openapi items
-     */
-    private boolean hasItems;
+	/**
+	 * key
+	 */
+	private String key;
 
-    public boolean isHasItems() {
-        return hasItems;
-    }
+	/**
+	 * type
+	 */
+	private String type;
 
-    public FormData setHasItems(boolean hasItems) {
-        this.hasItems = hasItems;
-        return this;
-    }
+	/**
+	 * description
+	 */
+	private String description;
 
-    public String getKey() {
-        return key;
-    }
+	/**
+	 * source
+	 */
+	private Object src;
 
-    public void setKey(String key) {
-        this.key = key;
-    }
+	/**
+	 * value
+	 */
+	private String value;
 
-    public String getType() {
-        return type;
-    }
+	/**
+	 * contentType eg: `application/json`,when the param has annotation `@RequestPart`
+	 * @see FormDataContentTypeEnum
+	 */
+	private String contentType;
 
-    public void setType(String type) {
-        this.type = type;
-    }
+	/**
+	 * openapi items
+	 */
+	private boolean hasItems;
 
-    public Object getSrc() {
-        return src;
-    }
+	public boolean isHasItems() {
+		return hasItems;
+	}
 
-    public void setSrc(Object src) {
-        this.src = src;
-    }
+	public void setHasItems(boolean hasItems) {
+		this.hasItems = hasItems;
+	}
 
-    public String getValue() {
-        return value;
-    }
+	public String getKey() {
+		return key;
+	}
 
-    public void setValue(String value) {
-        this.value = value;
-    }
+	public void setKey(String key) {
+		this.key = key;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getType() {
+		return type;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setType(String type) {
+		this.type = type;
+	}
 
-    @Override
-    public String toString() {
-        return "FormData{" +
-                "key='" + key + '\'' +
-                ", type='" + type + '\'' +
-                ", description='" + description + '\'' +
-                ", src=" + src +
-                ", value='" + value + '\'' +
-                ", hasItems=" + hasItems +
-                '}';
-    }
+	public Object getSrc() {
+		return src;
+	}
+
+	public void setSrc(Object src) {
+		this.src = src;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getContentType() {
+		return contentType;
+	}
+
+	public void setContentType(FormDataContentTypeEnum contentType) {
+		this.contentType = contentType.getValue();
+	}
+
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
+
+	@Override
+	public String toString() {
+		return "FormData{" + "key='" + key + '\'' + ", type='" + type + '\'' + ", description='" + description + '\''
+				+ ", src=" + src + ", value='" + value + '\'' + ", hasItems=" + hasItems + '}';
+	}
+
 }

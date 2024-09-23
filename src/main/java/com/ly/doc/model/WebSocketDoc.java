@@ -20,72 +20,107 @@
  */
 package com.ly.doc.model;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
  * the webSocket doc
  *
- * @author Lin222
+ * @author linwumingshi
+ * @since 3.0.3
  */
 public class WebSocketDoc extends ApiDoc {
 
-    /**
-     * the subProtocol list of webSocket
-     * <p>
-     * Sec-WebSocket-Protocol: soap, wamp
-     */
-    private String subProtocols;
+	/**
+	 * the subProtocol list of webSocket
+	 * <p>
+	 * Sec-WebSocket-Protocol: soap, wamp
+	 */
+	private String subProtocols;
 
-    /**
-     * path params
-     */
-    private List<ApiParam> pathParams;
+	/**
+	 * path params
+	 */
+	private List<ApiParam> pathParams;
 
-    /**
-     * webSocket url
-     */
-    private String url;
+	/**
+	 * message param
+	 */
+	private List<ApiParam> messageParams;
 
-    /**
-     * webSocket deprecated
-     */
-    private Boolean deprecated;
+	/**
+	 * response param
+	 */
+	private List<List<ApiParam>> responseParams;
 
+	/**
+	 * webSocket url
+	 */
+	private String uri;
 
-    public WebSocketDoc() {
-        this.deprecated = false;
-    }
+	/**
+	 * webSocket deprecated
+	 */
+	private Boolean deprecated;
 
+	public WebSocketDoc() {
+		this.deprecated = false;
+	}
 
-    public String getSubProtocols() {
-        return subProtocols;
-    }
+	public String getSubProtocols() {
+		return subProtocols;
+	}
 
-    public void setSubProtocols(String subProtocols) {
-        this.subProtocols = subProtocols;
-    }
+	public void setSubProtocols(String subProtocols) {
+		this.subProtocols = subProtocols;
+	}
 
-    public List<ApiParam> getPathParams() {
-        return pathParams;
-    }
+	public List<ApiParam> getPathParams() {
+		if (pathParams == null) {
+			return Collections.emptyList();
+		}
+		return pathParams;
+	}
 
-    public void setPathParams(List<ApiParam> pathParams) {
-        this.pathParams = pathParams;
-    }
+	public void setPathParams(List<ApiParam> pathParams) {
+		this.pathParams = pathParams;
+	}
 
-    public String getUrl() {
-        return url;
-    }
+	public List<ApiParam> getMessageParams() {
+		if (messageParams == null) {
+			return Collections.emptyList();
+		}
+		return messageParams;
+	}
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+	public WebSocketDoc setMessageParams(List<ApiParam> messageParams) {
+		this.messageParams = messageParams;
+		return this;
+	}
 
-    public Boolean getDeprecated() {
-        return deprecated;
-    }
+	public List<List<ApiParam>> getResponseParams() {
+		return responseParams;
+	}
 
-    public void setDeprecated(Boolean deprecated) {
-        this.deprecated = deprecated;
-    }
+	public WebSocketDoc setResponseParams(List<List<ApiParam>> responseParams) {
+		this.responseParams = responseParams;
+		return this;
+	}
+
+	public String getUri() {
+		return uri;
+	}
+
+	public void setUri(String uri) {
+		this.uri = uri;
+	}
+
+	public Boolean getDeprecated() {
+		return deprecated;
+	}
+
+	public void setDeprecated(Boolean deprecated) {
+		this.deprecated = deprecated;
+	}
+
 }

@@ -20,98 +20,103 @@
  */
 package com.ly.doc.handler;
 
+import com.ly.doc.builder.ProjectDocConfigBuilder;
+import com.ly.doc.constants.DocTags;
+import com.ly.doc.constants.JAXRSAnnotations;
+import com.ly.doc.constants.JakartaJaxrsAnnotations;
+import com.ly.doc.model.ApiReqParam;
+import com.ly.doc.utils.DocClassUtil;
+import com.ly.doc.utils.DocUtil;
+import com.power.common.util.StringUtil;
+import com.thoughtworks.qdox.model.JavaAnnotation;
+import com.thoughtworks.qdox.model.JavaMethod;
+import com.thoughtworks.qdox.model.JavaParameter;
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import com.ly.doc.constants.JAXRSAnnotations;
-import com.ly.doc.constants.JakartaJaxrsAnnotations;
-import com.ly.doc.model.ApiReqParam;
-import com.ly.doc.utils.DocUtil;
-import com.power.common.util.StringUtil;
-import com.ly.doc.builder.ProjectDocConfigBuilder;
-import com.ly.doc.constants.DocTags;
-import com.ly.doc.utils.DocClassUtil;
-import com.thoughtworks.qdox.model.JavaAnnotation;
-import com.thoughtworks.qdox.model.JavaMethod;
-import com.thoughtworks.qdox.model.JavaParameter;
-
-import org.apache.commons.lang3.StringUtils;
-
-
 /**
- * Jaxrs Header Handler
+ * Jaxrs Header Handler This class is responsible for handling JAX-RS HTTP header
+ * parameter annotations. It parses the parameters and their annotations within a method
+ * to extract header information.
  *
  * @author Zxq
  */
 public class JaxrsHeaderHandler {
 
-    /**
-     * Handle JAX RS Header
-     *
-     * @param method         method
-     * @param projectBuilder ProjectDocConfigBuilder
-     * @return list of ApiReqParam
-     */
-    public List<ApiReqParam> handle(JavaMethod method, ProjectDocConfigBuilder projectBuilder) {
-        Map<String, String> constantsMap = projectBuilder.getConstantsMap();
+	/**
+	 * Handles JAX-RS headers for a given method.
+	 * @param method The JavaMethod object representing the method whose headers are to be
+	 * handled.
+	 * @param projectBuilder The ProjectDocConfigBuilder object used to build project
+	 * documentation configurations.
+	 * @return A list of ApiReqParam objects representing the parsed header parameters.
+	 */
+	public List<ApiReqParam> handle(JavaMethod method, ProjectDocConfigBuilder projectBuilder) {
+		Map<String, String> constantsMap = projectBuilder.getConstantsMap();
 
-        ClassLoader classLoader = projectBuilder.getApiConfig().getClassLoader();
-        List<ApiReqParam> apiReqHeaders = new ArrayList<>();
-        List<JavaParameter> parameters = method.getParameters();
-        for (JavaParameter javaParameter : parameters) {
-            List<JavaAnnotation> annotations = javaParameter.getAnnotations();
-            String paramName = javaParameter.getName();
+		ClassLoader classLoader = projectBuilder.getApiConfig().getClassLoader();
+		List<ApiReqParam> apiReqHeaders = new ArrayList<>();
+		List<JavaParameter> parameters = method.getParameters();
+		for (JavaParameter javaParameter : parameters) {
+			List<JavaAnnotation> annotations = javaParameter.getAnnotations();
+			String paramName = javaParameter.getName();
 
-            // hit target head annotation
-            ApiReqParam apiReqHeader = new ApiReqParam();
+			// hit target head annotation
+			ApiReqParam apiReqHeader = new ApiReqParam();
 
-            String defaultValue = "";
-            for (JavaAnnotation annotation : annotations) {
-                String annotationName = annotation.getType().getFullyQualifiedName();
-                //Obtain header default value
-                if (JakartaJaxrsAnnotations.JAX_DEFAULT_VALUE_FULLY.equals(annotationName)
-                        || JAXRSAnnotations.JAX_DEFAULT_VALUE_FULLY.equals(annotationName)) {
-                    defaultValue = StringUtil.removeQuotes(DocUtil.getRequestHeaderValue(classLoader, annotation));
-                    defaultValue = DocUtil.handleConstants(constantsMap, defaultValue);
-                }
-                apiReqHeader.setValue(defaultValue);
+			String defaultValue = "";
+			for (JavaAnnotation annotation : annotations) {
+				String annotationName = annotation.getType().getFullyQualifiedName();
+				// Obtain header default value
+				if (JakartaJaxrsAnnotations.JAX_DEFAULT_VALUE_FULLY.equals(annotationName)
+						|| JAXRSAnnotations.JAX_DEFAULT_VALUE_FULLY.equals(annotationName)) {
+					defaultValue = StringUtil.removeQuotes(DocUtil.getRequestHeaderValue(classLoader, annotation));
+					defaultValue = DocUtil.handleConstants(constantsMap, defaultValue);
+				}
+				apiReqHeader.setValue(defaultValue);
 
-                // Obtain header value
-                if (JakartaJaxrsAnnotations.JAX_HEADER_PARAM_FULLY.equals(annotationName)
-                        || JAXRSAnnotations.JAX_HEADER_PARAM_FULLY.equals(annotationName)) {
-                    String name = StringUtil.removeQuotes(DocUtil.getRequestHeaderValue(classLoader, annotation));
-                    name = DocUtil.handleConstants(constantsMap, name);
-                    apiReqHeader.setName(name);
+				// Obtain header value
+				if (JakartaJaxrsAnnotations.JAX_HEADER_PARAM_FULLY.equals(annotationName)
+						|| JAXRSAnnotations.JAX_HEADER_PARAM_FULLY.equals(annotationName)) {
+					String name = StringUtil.removeQuotes(DocUtil.getRequestHeaderValue(classLoader, annotation));
+					name = DocUtil.handleConstants(constantsMap, name);
+					apiReqHeader.setName(name);
 
-                    String typeName = javaParameter.getType().getValue().toLowerCase();
-                    apiReqHeader.setType(DocClassUtil.processTypeNameForParams(typeName));
+					String typeName = javaParameter.getType().getValue().toLowerCase();
+					apiReqHeader.setType(DocClassUtil.processTypeNameForParams(typeName));
 
-                    String className = method.getDeclaringClass().getCanonicalName();
-                    Map<String, String> paramMap = DocUtil.getCommentsByTag(method, DocTags.PARAM, className);
-                    String paramComments = paramMap.get(paramName);
-                    apiReqHeader.setDesc(getComments(defaultValue, paramComments));
-                    apiReqHeaders.add(apiReqHeader);
-                }
-            }
-        }
-        return apiReqHeaders;
-    }
+					String className = method.getDeclaringClass().getCanonicalName();
+					Map<String, String> paramMap = DocUtil.getCommentsByTag(method, DocTags.PARAM, className);
+					String paramComments = paramMap.get(paramName);
+					apiReqHeader.setDesc(getComments(defaultValue, paramComments));
+					apiReqHeaders.add(apiReqHeader);
+				}
+			}
+		}
+		return apiReqHeaders;
+	}
 
-
-    private String getComments(String defaultValue, String paramComments) {
-        if (Objects.nonNull(paramComments)) {
-            StringBuilder desc = new StringBuilder();
-            desc.append(paramComments);
-            if (StringUtils.isNotBlank(defaultValue)) {
-                desc.append("(defaultValue: ")
-                        .append(defaultValue)
-                        .append(")");
-            }
-            return desc.toString();
-        }
-        return "";
-    }
+	/**
+	 * Generates a description string for a header parameter including its default value
+	 * if provided.
+	 * @param defaultValue The default value of the parameter.
+	 * @param paramComments Any comments or descriptions associated with the parameter.
+	 * @return A string containing the parameter description and default value.
+	 */
+	private String getComments(String defaultValue, String paramComments) {
+		if (Objects.nonNull(paramComments)) {
+			StringBuilder desc = new StringBuilder();
+			desc.append(paramComments);
+			if (StringUtils.isNotBlank(defaultValue)) {
+				desc.append("(defaultValue: ").append(defaultValue).append(")");
+			}
+			return desc.toString();
+		}
+		return "";
+	}
 
 }

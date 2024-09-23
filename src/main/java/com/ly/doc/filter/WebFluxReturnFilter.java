@@ -20,29 +20,33 @@
  */
 package com.ly.doc.filter;
 
-import com.ly.doc.constants.DocGlobalConstants;
 import com.ly.doc.constants.JavaTypeConstants;
 import com.ly.doc.model.ApiReturn;
 
 /**
+ * WebFlux Return Filter
+ *
  * @author yu 2020/4/17.
  */
 public class WebFluxReturnFilter implements ReturnTypeFilter {
 
-    private static final String FLUX = "reactor.core.publisher.Flux";
+	/**
+	 * Flux
+	 */
+	private static final String FLUX = "reactor.core.publisher.Flux";
 
-    @Override
-    public ApiReturn doFilter(String fullyName) {
-        //support web flux
-        if (fullyName.startsWith(FLUX)) {
-            ApiReturn apiReturn = new ApiReturn();
-            // rewrite type name
-            fullyName = fullyName.replace(FLUX, JavaTypeConstants.JAVA_LIST_FULLY);
-            apiReturn.setGenericCanonicalName(fullyName);
-            apiReturn.setSimpleName(JavaTypeConstants.JAVA_LIST_FULLY);
-            return apiReturn;
-        }
-        return null;
-    }
+	@Override
+	public ApiReturn doFilter(String fullyName) {
+		// support web flux
+		if (fullyName.startsWith(FLUX)) {
+			ApiReturn apiReturn = new ApiReturn();
+			// rewrite type name
+			fullyName = fullyName.replace(FLUX, JavaTypeConstants.JAVA_LIST_FULLY);
+			apiReturn.setGenericCanonicalName(fullyName);
+			apiReturn.setSimpleName(JavaTypeConstants.JAVA_LIST_FULLY);
+			return apiReturn;
+		}
+		return null;
+	}
 
 }

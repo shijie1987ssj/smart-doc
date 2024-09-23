@@ -23,7 +23,9 @@ package com.ly.doc.model;
 import com.thoughtworks.qdox.model.JavaMethod;
 import com.thoughtworks.qdox.model.JavaType;
 
+import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author yu 2020/10/30.
@@ -31,173 +33,221 @@ import java.util.Map;
  */
 public class DocJavaMethod {
 
-    private JavaMethod javaMethod;
+	/**
+	 * JavaMethod
+	 */
+	private JavaMethod javaMethod;
 
-    private Map<String, Object> returnSchema;
+	/**
+	 * return schema map
+	 */
+	private Map<String, Object> returnSchema;
 
-    private Map<String, Object> requestSchema;
+	/**
+	 * request schema map
+	 */
+	private Map<String, Object> requestSchema;
 
-    private Map<String, JavaType> actualTypesMap;
+	/**
+	 * actualTypesMap
+	 */
+	private Map<String, JavaType> actualTypesMap;
 
-    private String methodType;
+	/**
+	 * method type
+	 */
+	private String methodType;
 
-    private boolean download;
+	/**
+	 * download
+	 */
+	private boolean download;
 
-    /**
-     * mark page
-     */
-    private String page = "";
+	/**
+	 * mark page
+	 */
+	private String page = "";
 
-    /**
-     * api group
-     */
-    private String group;
+	/**
+	 * api group
+	 */
+	private String group;
 
-    private String author;
+	/**
+	 * method author
+	 */
+	private String author;
 
-    /**
-     * method description
-     */
-    private String desc;
+	/**
+	 * method description
+	 */
+	private String desc;
 
-    /**
-     * detailed introduction of the method
-     */
-    private String detail;
+	/**
+	 * detailed introduction of the method
+	 */
+	private String detail;
 
-    Map<String, String> paramTagMap;
+	/**
+	 * param tag map
+	 */
+	private Map<String, String> paramTagMap;
 
-    Map<String, String> paramsComments;
+	/**
+	 * param tag map
+	 */
+	private Map<String, String> paramsComments;
 
-    private String version;
+	/**
+	 * method api version
+	 */
+	private String version;
 
-    public String getVersion() {
-        return version;
-    }
+	/**
+	 * jsonViewClasses
+	 */
+	private Set<String> jsonViewClasses;
 
-    public DocJavaMethod setVersion(String version) {
-        this.version = version;
-        return this;
-    }
+	public Set<String> getJsonViewClasses() {
+		if (jsonViewClasses == null) {
+			return Collections.emptySet();
+		}
+		return jsonViewClasses;
+	}
 
-    public static DocJavaMethod builder() {
-        return new DocJavaMethod();
-    }
+	public DocJavaMethod setJsonViewClasses(Set<String> jsonViewClasses) {
+		this.jsonViewClasses = jsonViewClasses;
+		return this;
+	}
 
-    public JavaMethod getJavaMethod() {
-        return javaMethod;
-    }
+	public String getVersion() {
+		return version;
+	}
 
-    public DocJavaMethod setJavaMethod(JavaMethod javaMethod) {
-        this.javaMethod = javaMethod;
-        return this;
-    }
+	public DocJavaMethod setVersion(String version) {
+		this.version = version;
+		return this;
+	}
 
-    public Map<String, JavaType> getActualTypesMap() {
-        return actualTypesMap;
-    }
+	public static DocJavaMethod builder() {
+		return new DocJavaMethod();
+	}
 
-    public DocJavaMethod setActualTypesMap(Map<String, JavaType> actualTypesMap) {
-        this.actualTypesMap = actualTypesMap;
-        return this;
-    }
+	public JavaMethod getJavaMethod() {
+		return javaMethod;
+	}
 
-    public Map<String, Object> getReturnSchema() {
-        return returnSchema;
-    }
+	public DocJavaMethod setJavaMethod(JavaMethod javaMethod) {
+		this.javaMethod = javaMethod;
+		return this;
+	}
 
-    public DocJavaMethod setReturnSchema(Map<String, Object> returnSchema) {
-        this.returnSchema = returnSchema;
-        return this;
-    }
+	public Map<String, JavaType> getActualTypesMap() {
+		return actualTypesMap;
+	}
 
-    public Map<String, Object> getRequestSchema() {
-        return requestSchema;
-    }
+	public DocJavaMethod setActualTypesMap(Map<String, JavaType> actualTypesMap) {
+		this.actualTypesMap = actualTypesMap;
+		return this;
+	}
 
-    public DocJavaMethod setRequestSchema(Map<String, Object> requestSchema) {
-        this.requestSchema = requestSchema;
-        return this;
-    }
+	public Map<String, Object> getReturnSchema() {
+		return returnSchema;
+	}
 
-    public boolean isDownload() {
-        return download;
-    }
+	public DocJavaMethod setReturnSchema(Map<String, Object> returnSchema) {
+		this.returnSchema = returnSchema;
+		return this;
+	}
 
-    public DocJavaMethod setDownload(boolean download) {
-        this.download = download;
-        return this;
-    }
+	public Map<String, Object> getRequestSchema() {
+		return requestSchema;
+	}
 
-    public Map<String, String> getParamTagMap() {
-        return paramTagMap;
-    }
+	public DocJavaMethod setRequestSchema(Map<String, Object> requestSchema) {
+		this.requestSchema = requestSchema;
+		return this;
+	}
 
-    public DocJavaMethod setParamTagMap(Map<String, String> paramTagMap) {
-        this.paramTagMap = paramTagMap;
-        return this;
-    }
+	public boolean isDownload() {
+		return download;
+	}
 
-    public Map<String, String> getParamsComments() {
-        return paramsComments;
-    }
+	public DocJavaMethod setDownload(boolean download) {
+		this.download = download;
+		return this;
+	}
 
-    public DocJavaMethod setParamsComments(Map<String, String> paramsComments) {
-        this.paramsComments = paramsComments;
-        return this;
-    }
+	public Map<String, String> getParamTagMap() {
+		return paramTagMap;
+	}
 
-    public String getPage() {
-        return page;
-    }
+	public DocJavaMethod setParamTagMap(Map<String, String> paramTagMap) {
+		this.paramTagMap = paramTagMap;
+		return this;
+	}
 
-    public DocJavaMethod setPage(String page) {
-        this.page = page;
-        return this;
-    }
+	public Map<String, String> getParamsComments() {
+		return paramsComments;
+	}
 
-    public String getGroup() {
-        return group;
-    }
+	public DocJavaMethod setParamsComments(Map<String, String> paramsComments) {
+		this.paramsComments = paramsComments;
+		return this;
+	}
 
-    public DocJavaMethod setGroup(String group) {
-        this.group = group;
-        return this;
-    }
+	public String getPage() {
+		return page;
+	}
 
-    public String getAuthor() {
-        return author;
-    }
+	public DocJavaMethod setPage(String page) {
+		this.page = page;
+		return this;
+	}
 
-    public DocJavaMethod setAuthor(String author) {
-        this.author = author;
-        return this;
-    }
+	public String getGroup() {
+		return group;
+	}
 
-    public String getDesc() {
-        return desc;
-    }
+	public DocJavaMethod setGroup(String group) {
+		this.group = group;
+		return this;
+	}
 
-    public DocJavaMethod setDesc(String desc) {
-        this.desc = desc;
-        return this;
-    }
+	public String getAuthor() {
+		return author;
+	}
 
-    public String getDetail() {
-        return detail;
-    }
+	public DocJavaMethod setAuthor(String author) {
+		this.author = author;
+		return this;
+	}
 
-    public DocJavaMethod setDetail(String detail) {
-        this.detail = detail;
-        return this;
-    }
+	public String getDesc() {
+		return desc;
+	}
 
-    public String getMethodType() {
-        return methodType;
-    }
+	public DocJavaMethod setDesc(String desc) {
+		this.desc = desc;
+		return this;
+	}
 
-    public DocJavaMethod setMethodType(String methodType) {
-        this.methodType = methodType;
-        return this;
-    }
+	public String getDetail() {
+		return detail;
+	}
+
+	public DocJavaMethod setDetail(String detail) {
+		this.detail = detail;
+		return this;
+	}
+
+	public String getMethodType() {
+		return methodType;
+	}
+
+	public DocJavaMethod setMethodType(String methodType) {
+		this.methodType = methodType;
+		return this;
+	}
+
 }

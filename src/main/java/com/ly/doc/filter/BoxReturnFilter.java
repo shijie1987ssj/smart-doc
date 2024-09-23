@@ -20,52 +20,59 @@
  */
 package com.ly.doc.filter;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import com.ly.doc.constants.DocGlobalConstants;
 import com.ly.doc.constants.JavaTypeConstants;
 import com.ly.doc.model.ApiReturn;
 import com.ly.doc.utils.DocClassUtil;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
+ * Box Return Filter
+ *
  * @author yu 2020/4/17.
  */
 public class BoxReturnFilter implements ReturnTypeFilter {
 
-    private static final Set<String> TYPE_SET = new HashSet<>();
+	/**
+	 * Box Return Type
+	 */
+	private static final Set<String> TYPE_SET = new HashSet<>();
 
-    static {
-        TYPE_SET.add("java.util.concurrent.Callable");
-        TYPE_SET.add("java.util.concurrent.Future");
-        TYPE_SET.add("java.util.concurrent.CompletableFuture");
-        TYPE_SET.add("org.springframework.web.context.request.async.DeferredResult");
-        TYPE_SET.add("org.springframework.web.context.request.async.WebAsyncTask");
-        TYPE_SET.add("reactor.core.publisher.Mono");
-        TYPE_SET.add("org.springframework.http.ResponseEntity");
-    }
+	static {
+		TYPE_SET.add("java.util.concurrent.Callable");
+		TYPE_SET.add("java.util.concurrent.Future");
+		TYPE_SET.add("java.util.concurrent.CompletableFuture");
+		TYPE_SET.add("org.springframework.web.context.request.async.DeferredResult");
+		TYPE_SET.add("org.springframework.web.context.request.async.WebAsyncTask");
+		TYPE_SET.add("reactor.core.publisher.Mono");
+		TYPE_SET.add("org.springframework.http.ResponseEntity");
+	}
 
-    @Override
-    public ApiReturn doFilter(String fullyName) {
-        if (TYPE_SET.stream().anyMatch(fullyName::startsWith)) {
-            ApiReturn apiReturn = new ApiReturn();
-            if (fullyName.contains("<")) {
-                String[] strings = DocClassUtil.getSimpleGicName(fullyName);
-                String newFullName = strings[0];
-                if (newFullName.contains("<")) {
-                    apiReturn.setGenericCanonicalName(newFullName);
-                    apiReturn.setSimpleName(newFullName.substring(0, newFullName.indexOf("<")));
-                } else {
-                    apiReturn.setGenericCanonicalName(newFullName);
-                    apiReturn.setSimpleName(newFullName);
-                }
-            } else {
-                //directly return Java Object
-                apiReturn.setGenericCanonicalName(JavaTypeConstants.JAVA_OBJECT_FULLY);
-                apiReturn.setSimpleName(JavaTypeConstants.JAVA_OBJECT_FULLY);
-            }
-            return apiReturn;
-        }
-        return null;
-    }
+	@Override
+	public ApiReturn doFilter(String fullyName) {
+		if (TYPE_SET.stream().anyMatch(fullyName::startsWith)) {
+			ApiReturn apiReturn = new ApiReturn();
+			if (fullyName.contains("<")) {
+				String[] strings = DocClassUtil.getSimpleGicName(fullyName);
+				String newFullName = strings[0];
+				if (newFullName.contains("<")) {
+					apiReturn.setGenericCanonicalName(newFullName);
+					apiReturn.setSimpleName(newFullName.substring(0, newFullName.indexOf("<")));
+				}
+				else {
+					apiReturn.setGenericCanonicalName(newFullName);
+					apiReturn.setSimpleName(newFullName);
+				}
+			}
+			else {
+				// directly return Java Object
+				apiReturn.setGenericCanonicalName(JavaTypeConstants.JAVA_OBJECT_FULLY);
+				apiReturn.setSimpleName(JavaTypeConstants.JAVA_OBJECT_FULLY);
+			}
+			return apiReturn;
+		}
+		return null;
+	}
+
 }

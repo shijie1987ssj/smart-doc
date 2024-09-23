@@ -65,7 +65,7 @@ ${consumerConfigExample}
 
 <%}%>
 
-**Definition：** ${doc.escapeMethodDefinition}
+**Definition:** ${doc.escapeMethodDefinition}
 
 <%if(isNotEmpty(doc.author)){%>
 **Author:** ${doc.author}
@@ -115,8 +115,8 @@ ${consumerConfigExample}
 
 ### ${dict.title}
 
-| Name   | Code | Type | Description |
-|-----|------|------|-------------|
+| Name | Code | Type | Description |
+|------|------|------|-------------|
 <% for(dataDict in dict.dataDictList){ %>
 |${dataDict.name}|${dataDict.value}|${dataDict.type}|${htmlEscape(dataDict.desc)}|
 <%}%>

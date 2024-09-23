@@ -29,55 +29,55 @@ import com.thoughtworks.qdox.model.JavaClass;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 /**
+ * Defines the contract for a document build template that processes API schemas.
+ *
+ * @param <T> The type of document being built.
  * @author yu 2019/12/21.
  */
 public interface IDocBuildTemplate<T extends IDoc> extends IDocBuildBaseTemplate {
 
-    /**
-     * get api data by ProjectDocConfigBuilder
-     *
-     * @param projectBuilder ProjectDocConfigBuilder
-     * @return api data
-     */
-    default ApiSchema<T> getApiData(ProjectDocConfigBuilder projectBuilder) {
-        // For DocMapping initialization, when building multiple modules together, it is necessary to initialize and clear the cache
-        DocMapping.init();
-        DocBuildHelper docBuildHelper = DocBuildHelper.create(projectBuilder);
+	/**
+	 * get api data by ProjectDocConfigBuilder
+	 * @param projectBuilder ProjectDocConfigBuilder
+	 * @return api data
+	 */
+	default ApiSchema<T> getApiData(ProjectDocConfigBuilder projectBuilder) {
+		// For DocMapping initialization, when building multiple modules together, it is
+		// necessary to initialize and clear the cache
+		DocMapping.init();
+		DocBuildHelper docBuildHelper = DocBuildHelper.create(projectBuilder);
 
-        preRender(docBuildHelper);
-        // get candidate classes
-        Collection<JavaClass> candidateClasses = getCandidateClasses(projectBuilder, docBuildHelper);
-        ApiSchema<T> apiSchema = renderApi(projectBuilder, candidateClasses);
+		this.preRender(docBuildHelper);
+		// get candidate classes
+		Collection<JavaClass> candidateClasses = this.getCandidateClasses(projectBuilder, docBuildHelper);
+		ApiSchema<T> apiSchema = this.renderApi(projectBuilder, candidateClasses);
 
-        postRender(docBuildHelper, apiSchema.getApiDatas());
+		if (Objects.isNull(apiSchema)) {
+			apiSchema = new ApiSchema<>();
+		}
+		this.postRender(docBuildHelper, apiSchema.getApiDatas());
 
-        return apiSchema;
-    }
+		return apiSchema;
+	}
 
+	/**
+	 * render api
+	 * @param projectBuilder ProjectDocConfigBuilder
+	 * @param candidateClasses candidate classes
+	 * @return api ApiSchema
+	 */
+	ApiSchema<T> renderApi(ProjectDocConfigBuilder projectBuilder, Collection<JavaClass> candidateClasses);
 
-    /**
-     * render api
-     *
-     * @param projectBuilder   ProjectDocConfigBuilder
-     * @param candidateClasses candidate classes
-     * @return api ApiSchema
-     */
-    ApiSchema<T> renderApi(ProjectDocConfigBuilder projectBuilder, Collection<JavaClass> candidateClasses);
-
-
-
-
-    /**
-     * post render
-     *
-     * @param docBuildHelper docBuildHelper
-     * @param apiList        apiList
-     */
-    default void postRender(DocBuildHelper docBuildHelper, List<T> apiList) {
-        docBuildHelper.rebuildDependencyTree(apiList);
-    }
-
+	/**
+	 * post render
+	 * @param docBuildHelper docBuildHelper
+	 * @param apiList apiList
+	 */
+	default void postRender(DocBuildHelper docBuildHelper, List<T> apiList) {
+		docBuildHelper.rebuildDependencyTree(apiList);
+	}
 
 }

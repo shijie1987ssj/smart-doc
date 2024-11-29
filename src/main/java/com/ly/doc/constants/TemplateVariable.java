@@ -96,6 +96,10 @@ public enum TemplateVariable {
 	 */
 	PROJECT_NAME("projectName"),
 	/**
+	 * projectName
+	 */
+	SHOW_SINCE("showSince"),
+	/**
 	 * language
 	 */
 	LANGUAGE("language"),

@@ -192,6 +192,11 @@ public class ApiConfig {
 	 */
 	private String projectCName;
 
+	/**
+	 * 是否展示since
+	 */
+	private Boolean showSince = Boolean.TRUE;
+
 	public ApiOpenApiCustomParam getOpenApiCustomParam() {
 		return openApiCustomParam;
 	}
@@ -1151,4 +1156,11 @@ public class ApiConfig {
 		this.addDefaultHttpStatuses = addDefaultHttpStatuses;
 	}
 
+	public Boolean getShowSince() {
+		return showSince;
+	}
+
+	public void setShowSince(Boolean showSince) {
+		this.showSince = showSince;
+	}
 }

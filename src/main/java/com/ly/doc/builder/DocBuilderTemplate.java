@@ -139,6 +139,7 @@ public class DocBuilderTemplate implements IBaseDocBuilderTemplate<ApiDoc> {
 		tpl.binding(TemplateVariable.INDEX_ALIAS.getVariable(), index);
 		tpl.binding(TemplateVariable.CREATE_TIME.getVariable(), strTime);
 		tpl.binding(TemplateVariable.PROJECT_NAME.getVariable(), config.getProjectName());
+		tpl.binding(TemplateVariable.SHOW_SINCE.getVariable(), config.getShowSince());
 		tpl.binding(TemplateVariable.REQUEST_EXAMPLE.getVariable(), config.isRequestExample());
 		tpl.binding(TemplateVariable.RESPONSE_EXAMPLE.getVariable(), config.isResponseExample());
 		tpl.binding(TemplateVariable.DISPLAY_REQUEST_PARAMS.getVariable(), config.isRequestParamsTable());

@@ -96,6 +96,7 @@ public class DocBuilderTemplate implements IBaseDocBuilderTemplate<ApiDoc> {
 		mapper.binding(TemplateVariable.LIST.getVariable(), doc.getList());
 		mapper.binding(TemplateVariable.REQUEST_EXAMPLE.getVariable(), config.isRequestExample());
 		mapper.binding(TemplateVariable.RESPONSE_EXAMPLE.getVariable(), config.isResponseExample());
+		mapper.binding(TemplateVariable.SHOW_SINCE.getVariable(), config.getShowSince());
 		return mapper;
 	}
 

@@ -310,6 +310,7 @@
                         </w:r>
                     </w:p>
                 </w:tc>
+                <% if(showSince) { %>
                 <w:tc>
                     <w:tcPr>
                         <w:tcW w:w="2989" w:type="dxa"/>
@@ -335,6 +336,7 @@
                         </w:r>
                     </w:p>
                 </w:tc>
+                <%}%>
             </w:tr>
             <%
             for(header in doc.requestHeaders){
@@ -432,6 +434,7 @@
                         </w:r>
                     </w:p>
                 </w:tc>
+                <% if(showSince) { %>
                 <w:tc>
                     <w:tcPr>
                         <w:tcW w:w="2989" w:type="dxa"/>
@@ -455,6 +458,7 @@
                         </w:r>
                     </w:p>
                 </w:tc>
+                <%}%>
             </w:tr>
             <%}%>
         </w:tbl>
@@ -598,6 +602,7 @@
                         </w:r>
                     </w:p>
                 </w:tc>
+                <% if(showSince) { %>
                 <w:tc>
                     <w:tcPr>
                         <w:tcW w:w="2691" w:type="dxa"/>
@@ -623,6 +628,7 @@
                         </w:r>
                     </w:p>
                 </w:tc>
+                <%}%>
             </w:tr>
             <%
             for(param in doc.pathParams){
@@ -720,6 +726,7 @@
                         </w:r>
                     </w:p>
                 </w:tc>
+                <% if(showSince) { %>
                 <w:tc>
                     <w:tcPr>
                         <w:tcW w:w="2691" w:type="dxa"/>
@@ -743,6 +750,7 @@
                         </w:r>
                     </w:p>
                 </w:tc>
+                <%}%>
             </w:tr>
             <%}%>
         </w:tbl>
@@ -886,6 +894,7 @@
                         </w:r>
                     </w:p>
                 </w:tc>
+                <% if(showSince) { %>
                 <w:tc>
                     <w:tcPr>
                         <w:tcW w:w="2691" w:type="dxa"/>
@@ -911,6 +920,7 @@
                         </w:r>
                     </w:p>
                 </w:tc>
+                <%}%>
             </w:tr>
             <%
             for(param in doc.queryParams){
@@ -1008,6 +1018,7 @@
                         </w:r>
                     </w:p>
                 </w:tc>
+                <% if(showSince) { %>
                 <w:tc>
                     <w:tcPr>
                         <w:tcW w:w="2691" w:type="dxa"/>
@@ -1031,6 +1042,7 @@
                         </w:r>
                     </w:p>
                 </w:tc>
+                <%}%>
             </w:tr>
             <%}%>
         </w:tbl>
@@ -1175,6 +1187,7 @@
                         </w:r>
                     </w:p>
                 </w:tc>
+                <% if(showSince) { %>
                 <w:tc>
                     <w:tcPr>
                         <w:tcW w:w="2691" w:type="dxa"/>
@@ -1200,6 +1213,7 @@
                         </w:r>
                     </w:p>
                 </w:tc>
+                <%}%>
             </w:tr>
             <%
             for(param in doc.requestParams){
@@ -1297,6 +1311,7 @@
                         </w:r>
                     </w:p>
                 </w:tc>
+                <% if(showSince) { %>
                 <w:tc>
                     <w:tcPr>
                         <w:tcW w:w="2691" w:type="dxa"/>
@@ -1320,6 +1335,7 @@
                         </w:r>
                     </w:p>
                 </w:tc>
+                <%}%>
             </w:tr>
             <%}%>
         </w:tbl>
@@ -1472,6 +1488,7 @@
                         </w:r>
                     </w:p>
                 </w:tc>
+                <% if(showSince) { %>
                 <w:tc>
                     <w:tcPr>
                         <w:tcW w:w="5310" w:type="dxa"/>
@@ -1497,6 +1514,7 @@
                         </w:r>
                     </w:p>
                 </w:tc>
+                <%}%>
             </w:tr>
             <%
             for(param in doc.responseParams){
@@ -1568,6 +1586,7 @@
                         </w:r>
                     </w:p>
                 </w:tc>
+                <% if(showSince) { %>
                 <w:tc>
                     <w:tcPr>
                         <w:tcW w:w="5310" w:type="dxa"/>
@@ -1591,6 +1610,7 @@
                         </w:r>
                     </w:p>
                 </w:tc>
+                <%}%>
             </w:tr>
             <%}%>
         </w:tbl>

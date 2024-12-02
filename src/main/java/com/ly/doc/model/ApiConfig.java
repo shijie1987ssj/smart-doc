@@ -195,7 +195,7 @@ public class ApiConfig {
 	/**
 	 * 是否展示since
 	 */
-	private Boolean showSince = Boolean.FALSE;
+	private Boolean showSince = Boolean.TRUE;
 
 	public ApiOpenApiCustomParam getOpenApiCustomParam() {
 		return openApiCustomParam;
